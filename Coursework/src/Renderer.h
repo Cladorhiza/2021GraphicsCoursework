@@ -12,6 +12,6 @@ public:
 	Renderer();
 	~Renderer();
 	void DrawQuad(Shape& sprite, Shader& shader);
-	void DrawTileMap(TileMap& tilemap, Shader& shader, const glm::mat4& projectionMatrix);
+	void DrawTileMap(TileMap& tilemap, Shader& shader, const glm::mat4& projectionMatrix, const glm::mat4& viewMatrix);
 };
 

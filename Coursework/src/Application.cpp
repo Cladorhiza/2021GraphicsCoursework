@@ -47,23 +47,21 @@ int main(void) {
 
 	TextureManager textureManager;
 	
-
+	glm::mat4 viewMatrix(1.0f);
 	glm::mat4 projectionMatrix = glm::ortho(-0.5f, 5.5f, -0.5f, 3.5f);
 	Sprite s(30.f, 30.f, 30.f, 30.f, 0.f);
-	TileMap tilemap(6,4);
+	TileMap tilemap(256,256);
 	tilemap.InitTiles(textureManager);
 
-
-
+	
 	while (!glfwWindowShouldClose(window))
 	{
 		glClearColor(0.2f,0.2f,0.2f,1.f);
 		glClear(GL_COLOR_BUFFER_BIT);
 		/* Render here */
-
-		shader.SetUniformMat4f("ProjectionMatrix", projectionMatrix);
+		std::cout << "pog";
 		
-		renderer.DrawTileMap(tilemap, shader, projectionMatrix);
+		renderer.DrawTileMap(tilemap, shader, projectionMatrix, viewMatrix);
 
 		/* Swap front and back buffers */
 		glfwSwapBuffers(window);

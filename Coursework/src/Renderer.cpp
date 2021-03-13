@@ -24,10 +24,11 @@ void Renderer::DrawQuad(Shape& sprite, Shader& shader) {
 }
 
 
-void Renderer::DrawTileMap(TileMap& tilemap, Shader& shader, const glm::mat4& projectionMatrix) {
+void Renderer::DrawTileMap(TileMap& tilemap, Shader& shader, const glm::mat4& projectionMatrix, const glm::mat4& viewMatrix) {
 
 	shader.Bind();
 	shader.SetUniformMat4f("ProjectionMatrix", projectionMatrix);
+	shader.SetUniformMat4f("ViewMatrix", viewMatrix);
 	for (Tile& t : tilemap) {
 
 		t.Bind();

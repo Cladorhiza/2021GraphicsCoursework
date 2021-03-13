@@ -8,20 +8,14 @@ out vec2 ex_TexCoords;
 
 uniform vec3 worldPosition;
 uniform mat4 ProjectionMatrix;
+uniform mat4 ViewMatrix;
 
 
 
 void main()
 {
 
-	//mat4 model = mat4(
-	//	1.0f, 0.0f, 0.0f, worldPosition[0],
-	//	0.0f, 1.0f, 0.0f, worldPosition[1],
-	//	0.0f, 0.0f, 1.0f, worldPosition[2],
-	//	0.0f, 0.0f, 0.0f, 1.0f
-	//);
-
-	gl_Position = ProjectionMatrix * vec4(in_Position + worldPosition, 1.0);
+	gl_Position = ProjectionMatrix * ViewMatrix * vec4(in_Position + worldPosition, 1.0);
 	ex_Color = vec4(in_Colour, 1.0);
 	ex_TexCoords = in_TexCoords;
 };

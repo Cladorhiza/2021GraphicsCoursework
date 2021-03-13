@@ -50,7 +50,7 @@ int main(void) {
 	glm::mat4 viewMatrix(1.0f);
 	glm::mat4 projectionMatrix = glm::ortho(-0.5f, 5.5f, -0.5f, 3.5f);
 	Sprite s(30.f, 30.f, 30.f, 30.f, 0.f);
-	TileMap tilemap(256,256);
+	TileMap tilemap(6,4);
 	tilemap.InitTiles(textureManager);
 
 	

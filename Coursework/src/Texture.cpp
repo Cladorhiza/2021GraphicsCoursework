@@ -49,6 +49,11 @@ void Texture::Bind() {
 	glBindTexture(GL_TEXTURE_2D, id);
 }
 
+void Texture::Bind(int slot) {
+
+	glBindTextureUnit(slot, id);
+
+}
 void Texture::Unbind() {
 
 	glBindTexture(GL_TEXTURE_2D, 0);

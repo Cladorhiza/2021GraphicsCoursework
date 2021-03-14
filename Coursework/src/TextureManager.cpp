@@ -21,8 +21,9 @@ std::vector<std::string> TextureManager::LoadTileTextures(const std::string& Fil
 	}
 
 	while (std::getline(file, texName)) {
-		if (textureMap.find(texName) == textureMap.end())
+		if (textureMap.find(texName) == textureMap.end()) {
 			textureMap.emplace(texName, TILES_PATH + texName + FILE_EXTENSION);
+		}
 		texNames.push_back(texName);
 	}
 	return texNames;

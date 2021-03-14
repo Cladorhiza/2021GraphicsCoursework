@@ -12,6 +12,7 @@ public:
 	void Init(const std::string filePath);
 	~Texture();
 	void Bind();
+	void Bind(int slot);
 	void Unbind();
 	//Texture(const Texture& t) = delete;
 };

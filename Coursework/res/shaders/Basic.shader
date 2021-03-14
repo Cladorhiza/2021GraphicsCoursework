@@ -3,8 +3,10 @@
 layout(location = 0) in vec3 in_Position;
 layout(location = 1) in vec3 in_Colour;
 layout(location = 2) in vec2 in_TexCoords;
+layout(location = 3) in float in_TexID;
 out vec4 ex_Color;
 out vec2 ex_TexCoords;
+out float ex_TexID;
 
 uniform vec3 worldPosition;
 uniform mat4 ProjectionMatrix;
@@ -14,10 +16,11 @@ uniform mat4 ViewMatrix;
 
 void main()
 {
-
+	
 	gl_Position = ProjectionMatrix * ViewMatrix * vec4(in_Position + worldPosition, 1.0);
 	ex_Color = vec4(in_Colour, 1.0);
 	ex_TexCoords = in_TexCoords;
+	ex_TexID = in_TexID;
 };
 
 #shader fragment
@@ -25,11 +28,13 @@ void main()
 
 in vec4 ex_Color;
 in vec2 ex_TexCoords;
+in float ex_TexID;
 out vec4 out_Color;
 
-uniform sampler2D diffuseMap;
+uniform sampler2D diffuseMap[32];
 
 void main()
 {
-	out_Color = texture(diffuseMap, ex_TexCoords);
+	int index = int(ex_TexID);
+	out_Color = texture(diffuseMap[index], ex_TexCoords);
 };

@@ -144,7 +144,6 @@
     <ClCompile Include="src\Shader.cpp" />
     <ClCompile Include="src\VertexArray.cpp" />
     <ClCompile Include="src\Texture.cpp" />
-    <ClCompile Include="src\Tile.cpp" />
     <ClCompile Include="src\TileMap.cpp" />
     <ClCompile Include="src\TextureManager.cpp" />
   </ItemGroup>
@@ -161,7 +160,6 @@
     <ClInclude Include="src\Shader.h" />
     <ClInclude Include="src\VertexArray.h" />
     <ClInclude Include="src\Texture.h" />
-    <ClInclude Include="src\Tile.h" />
     <ClInclude Include="src\TileMap.h" />
     <ClInclude Include="src\TextureManager.h" />
   </ItemGroup>

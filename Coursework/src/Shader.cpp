@@ -30,6 +30,10 @@ void Shader::SetUniformMat4f(const std::string& name, const glm::mat4& matrix) {
 	glUniformMatrix4fv(GetUniformLocation(name), 1, GL_FALSE, glm::value_ptr(matrix));
 }
 
+void Shader::SetUniform1iv(const std::string& name, const int size, const int* const data) {
+
+	glUniform1iv(GetUniformLocation(name), 32, data);
+}
 
 void Shader::SetUniform4f(const std::string & name, float v0, float v1, float v2, float v3)
 {

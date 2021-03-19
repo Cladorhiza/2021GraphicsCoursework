@@ -21,6 +21,7 @@ void Renderer::DrawQuad(Shape& sprite, Shader& shader) {
 	shader.SetUniformvec3f("worldPosition", sprite.GetX(), sprite.GetY(), sprite.GetZ());
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, squareIndexBuffer);
 	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
+	shader.SetUniformvec3f("worldPosition", 0.0f,0.0f,0.0f);
 }
 
 

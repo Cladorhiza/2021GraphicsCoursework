@@ -10,12 +10,12 @@ TextureManager::TextureManager()
 {
 }
 
-std::vector<std::pair<std::string,int>> TextureManager::LoadTileTextures(const std::string& FilePath)
+std::vector<std::pair<std::string,int>> TextureManager::LoadTileTextures(const std::string& filePath)
 {
 	std::vector<std::pair<std::string, int>> texNamesAndCount;
 	std::vector<std::string> texNameAndCount;
 	std::string fileLine;
-	std::fstream file(FilePath);
+	std::fstream file(filePath);
 	std::stringstream ss;
 	if (!file.good()) {
 		//LOGWARNING
@@ -30,20 +30,39 @@ std::vector<std::pair<std::string,int>> TextureManager::LoadTileTextures(const s
 		std::pair<std::string, int> p(texNameAndCount[0], std::stoi(texNameAndCount[1]));
 
 		
-		textureMap.emplace(p.first, TILES_PATH + p.first + FILE_EXTENSION);
+		tileTextureMap.emplace(p.first, TILES_PATH + p.first + FILE_EXTENSION);
 		texNamesAndCount.push_back(p);
 	}
 	
 	return texNamesAndCount;
 }
-Texture& TextureManager::GetTexture(const std::string& name) {
-	if (textureMap.find(name) == textureMap.end()) {
+
+void TextureManager::LoadSpriteTextures(const std::string& filePath) {
+	std::string fileLine;
+	std::fstream file(filePath);
+	std::stringstream ss;
+
+	while (std::getline(file, fileLine)) {
+		spriteTextureMap.emplace(fileLine, SPRITES_PATH + fileLine + FILE_EXTENSION);
+	}
+}
+
+Texture& TextureManager::GetSpriteTexture(const std::string& name) {
+	if (spriteTextureMap.find(name) == spriteTextureMap.end()) {
 		//LOGWARNING
 		printf("default tex for name: %s\n", name);
-		return textureMap[name];
 	}
-	return textureMap[name];
+	return spriteTextureMap[name];
 }
+
+Texture& TextureManager::GetTileTexture(const std::string& name) {
+	if (tileTextureMap.find(name) == tileTextureMap.end()) {
+		//LOGWARNING
+		printf("default tex for name: %s\n", name);
+	}
+	return tileTextureMap[name];
+}
+
 TextureManager::~TextureManager()
 {
 }

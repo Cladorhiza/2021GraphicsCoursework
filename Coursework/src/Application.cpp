@@ -53,9 +53,9 @@ int main(void) {
 	TextureManager textureManager;
 	
 	glm::mat4 viewMatrix(1.0f);
-	glm::mat4 projectionMatrix = glm::ortho(0.f,300.f,0.f,300.f);
+	glm::mat4 projectionMatrix = glm::ortho(-1.f,7.f,-1.f,5.f);
 	Sprite s(30.f, 30.f, 30.f, 30.f, 0.f);
-	TileMap tilemap(256,256);
+	TileMap tilemap(6,4);
 	tilemap.InitTiles(textureManager);
 
 	/* Loop until the user closes the window */

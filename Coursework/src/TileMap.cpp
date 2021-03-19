@@ -12,13 +12,13 @@ TileMap::TileMap(int sizeX, int sizeY)
 {
 
 
-	for (int i = 0; i < sizeX; i++) {
+	for (int i = 0; i < sizeY; i++) {
 
-		for (int j = 0; j < sizeY; j++) {
+		for (int j = 0; j < sizeX; j++) {
 
 			Tile t;
-			t.x = i;
-			t.y = j;
+			t.x = j;
+			t.y = i;
 			t.z = 0.0f;
 			t.texIndex = 0.f;
 
@@ -33,79 +33,84 @@ TileMap::TileMap(int sizeX, int sizeY)
 void TileMap::InitTiles(TextureManager& textureManager) {
 	
 	manager = &textureManager;
-	std::vector<std::string> texNames = textureManager.LoadTileTextures("res/maps/testMap/TextureMap.csv");
+	std::vector<std::pair<std::string, int>> texNamesAndCounts = textureManager.LoadTileTextures("res/maps/testMap/TextureMap.csv");
 	int uniqueTexCount = 0;
 	int indexCount = 0;
+	size_t tileIndex = 0;
 
-	if (texNames.size() != tiles.size()) {
-		printf("size mismatch error");
-		//LOGWARNING
-	}
+	//if (texNames.size() != tiles.size()) {
+	//	printf("size mismatch error");
+	//	//LOGWARNING
+	//}
 
-	for (int i = 0; i < tiles.size(); i++) {
+	for (std::pair<std::string, int>& p : texNamesAndCounts) {
 
-		if (uniqueTexCount > 32) {
-			//LOGWARNING
+		for (int i = 0; i < p.second; i++) {
+
+			if (uniqueTexturesNames.find(p.first) == uniqueTexturesNames.end()) {
+				uniqueTexturesNames[p.first] = uniqueTexCount;
+				uniqueTexCount++;
+			}
+			tiles[tileIndex].texIndex = uniqueTexturesNames[p.first];
+
+			//push 4 quad coords
+			vertexes.push_back(-0.5f + tiles[tileIndex].x);
+			vertexes.push_back(-0.5f + tiles[tileIndex].y);
+			vertexes.push_back(0.0f + tiles[tileIndex].z);
+			vertexes.push_back(1.0f);
+			vertexes.push_back(1.0f);
+			vertexes.push_back(1.0f);
+			vertexes.push_back(0.0f);
+			vertexes.push_back(0.0f);
+			vertexes.push_back(tiles[tileIndex].texIndex);
+
+			vertexes.push_back(-0.5f + tiles[tileIndex].x);
+			vertexes.push_back(0.5f + tiles[tileIndex].y);
+			vertexes.push_back(0.0f + tiles[tileIndex].z);
+			vertexes.push_back(1.0f);
+			vertexes.push_back(1.0f);
+			vertexes.push_back(1.0f);
+			vertexes.push_back(0.0f);
+			vertexes.push_back(1.0f);
+			vertexes.push_back(tiles[tileIndex].texIndex);
+
+			vertexes.push_back(0.5f + tiles[tileIndex].x);
+			vertexes.push_back(0.5f + tiles[tileIndex].y);
+			vertexes.push_back(0.0f + tiles[tileIndex].z);
+			vertexes.push_back(1.0f);
+			vertexes.push_back(1.0f);
+			vertexes.push_back(1.0f);
+			vertexes.push_back(1.0f);
+			vertexes.push_back(1.0f);
+			vertexes.push_back(tiles[tileIndex].texIndex);
+
+			vertexes.push_back(0.5f + tiles[tileIndex].x);
+			vertexes.push_back(-0.5f + tiles[tileIndex].y);
+			vertexes.push_back(0.0f + tiles[tileIndex].z);
+			vertexes.push_back(1.0f);
+			vertexes.push_back(1.0f);
+			vertexes.push_back(1.0f);
+			vertexes.push_back(1.0f);
+			vertexes.push_back(0.0f);
+			vertexes.push_back(tiles[tileIndex].texIndex);
+
+			indexes.push_back(0 + indexCount);
+			indexes.push_back(1 + indexCount);
+			indexes.push_back(2 + indexCount);
+			indexes.push_back(3 + indexCount);
+			indexes.push_back(2 + indexCount);
+			indexes.push_back(0 + indexCount);
+
+
+			indexCount += 4;
+			tileIndex++;
+
+			if (uniqueTexCount > 32) {
+				//LOGWARNING
+			}
+
 		}
 
-
-		if (uniqueTexturesNames.find(texNames[i]) == uniqueTexturesNames.end()) {
-			uniqueTexturesNames[texNames[i]] = uniqueTexCount;
-			uniqueTexCount++;
-		}
-		tiles[i].texIndex = uniqueTexturesNames[texNames[i]];
-
-		//push 4 quad coords
-		vertexes.push_back(-0.5f + tiles[i].x);
-		vertexes.push_back(-0.5f + tiles[i].y);
-		vertexes.push_back(0.0f + tiles[i].z);
-		vertexes.push_back(1.0f);
-		vertexes.push_back(1.0f);
-		vertexes.push_back(1.0f);
-		vertexes.push_back(0.0f);
-		vertexes.push_back(0.0f);
-		vertexes.push_back(tiles[i].texIndex);
-
-		vertexes.push_back(-0.5f + tiles[i].x);
-		vertexes.push_back(0.5f + tiles[i].y);
-		vertexes.push_back(0.0f + tiles[i].z);
-		vertexes.push_back(1.0f);
-		vertexes.push_back(1.0f);
-		vertexes.push_back(1.0f);
-		vertexes.push_back(0.0f);
-		vertexes.push_back(1.0f);
-		vertexes.push_back(tiles[i].texIndex);
-
-		vertexes.push_back(0.5f + tiles[i].x);
-		vertexes.push_back(0.5f + tiles[i].y);
-		vertexes.push_back(0.0f + tiles[i].z);
-		vertexes.push_back(1.0f);
-		vertexes.push_back(1.0f);
-		vertexes.push_back(1.0f);
-		vertexes.push_back(1.0f);
-		vertexes.push_back(1.0f);
-		vertexes.push_back(tiles[i].texIndex);
-
-		vertexes.push_back(0.5f + tiles[i].x);
-		vertexes.push_back(-0.5f + tiles[i].y);
-		vertexes.push_back(0.0f + tiles[i].z);
-		vertexes.push_back(1.0f);
-		vertexes.push_back(1.0f);
-		vertexes.push_back(1.0f);
-		vertexes.push_back(1.0f);
-		vertexes.push_back(0.0f);
-		vertexes.push_back(tiles[i].texIndex);
-
-		indexes.push_back(0 + indexCount);
-		indexes.push_back(1 + indexCount);
-		indexes.push_back(2 + indexCount);
-		indexes.push_back(3 + indexCount);
-		indexes.push_back(2 + indexCount);
-		indexes.push_back(0 + indexCount);
-
-		indexCount += 4;
-
-		
 	}
 	glGenVertexArrays(1, &vao);
 	glBindVertexArray(vao);

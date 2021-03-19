@@ -158,6 +158,7 @@
     <ClInclude Include="src\Shape.h" />
     <ClInclude Include="src\Entity.h" />
     <ClInclude Include="src\Shader.h" />
+    <ClInclude Include="src\Util.h" />
     <ClInclude Include="src\VertexArray.h" />
     <ClInclude Include="src\Texture.h" />
     <ClInclude Include="src\TileMap.h" />

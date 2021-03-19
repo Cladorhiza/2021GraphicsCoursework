@@ -3,30 +3,38 @@
 #include <sstream>
 #include <fstream>
 
+#include "Util.h"
+
 
 TextureManager::TextureManager()
 {
 }
 
-std::vector<std::string> TextureManager::LoadTileTextures(const std::string& FilePath)
+std::vector<std::pair<std::string,int>> TextureManager::LoadTileTextures(const std::string& FilePath)
 {
-	std::vector<std::string> texNames;
-	std::string texName;
+	std::vector<std::pair<std::string, int>> texNamesAndCount;
+	std::vector<std::string> texNameAndCount;
+	std::string fileLine;
 	std::fstream file(FilePath);
 	std::stringstream ss;
 	if (!file.good()) {
 		//LOGWARNING
 		printf("Incorrect path to textures");
-		return texNames;
+		return texNamesAndCount;
 	}
 
-	while (std::getline(file, texName)) {
-		if (textureMap.find(texName) == textureMap.end()) {
-			textureMap.emplace(texName, TILES_PATH + texName + FILE_EXTENSION);
-		}
-		texNames.push_back(texName);
+	while (std::getline(file, fileLine)) {
+
+		texNameAndCount = Util::split(fileLine, ",");
+
+		std::pair<std::string, int> p(texNameAndCount[0], std::stoi(texNameAndCount[1]));
+
+		
+		textureMap.emplace(p.first, TILES_PATH + p.first + FILE_EXTENSION);
+		texNamesAndCount.push_back(p);
 	}
-	return texNames;
+	
+	return texNamesAndCount;
 }
 Texture& TextureManager::GetTexture(const std::string& name) {
 	if (textureMap.find(name) == textureMap.end()) {

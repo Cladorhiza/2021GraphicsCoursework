@@ -11,7 +11,7 @@ private:
 public:	
 
 	TextureManager();
-	std::vector<std::string> LoadTileTextures(const std::string& FilePath);
+	std::vector<std::pair<std::string, int>> LoadTileTextures(const std::string& FilePath);
 	~TextureManager();
 	Texture& GetTexture(const std::string& name);
 };

@@ -134,6 +134,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Character.cpp" />
+    <ClCompile Include="src\Moveable.cpp" />
+    <ClCompile Include="src\InputManager.cpp" />
     <ClCompile Include="src\Sprite.cpp" />
     <ClCompile Include="src\Rectangle.cpp" />
     <ClCompile Include="src\not_my_code\stb_image\stb_image.cpp" />
@@ -142,6 +145,7 @@
     <ClCompile Include="src\Entity.cpp" />
     <ClCompile Include="src\Application.cpp" />
     <ClCompile Include="src\Shader.cpp" />
+    <ClCompile Include="src\Util.cpp" />
     <ClCompile Include="src\VertexArray.cpp" />
     <ClCompile Include="src\Texture.cpp" />
     <ClCompile Include="src\TileMap.cpp" />
@@ -151,6 +155,9 @@
     <None Include="res\shaders\Basic.shader" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Character.h" />
+    <ClInclude Include="src\Moveable.h" />
+    <ClInclude Include="src\InputManager.h" />
     <ClInclude Include="src\Sprite.h" />
     <ClInclude Include="src\Rectangle.h" />
     <ClInclude Include="src\not_my_code\stb_image\stb_image.h" />

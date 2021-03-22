@@ -10,7 +10,7 @@ TextureManager::TextureManager()
 {
 }
 
-std::vector<std::pair<std::string,int>> TextureManager::LoadTileTextures(const std::string& filePath)
+std::vector<std::pair<std::string, int>> TextureManager::LoadTileTextures(const std::string& filePath)
 {
 	std::vector<std::pair<std::string, int>> texNamesAndCount;
 	std::vector<std::string> texNameAndCount;
@@ -29,8 +29,9 @@ std::vector<std::pair<std::string,int>> TextureManager::LoadTileTextures(const s
 
 		std::pair<std::string, int> p(texNameAndCount[0], std::stoi(texNameAndCount[1]));
 
+		if (tileTextureMap.find(p.first) == tileTextureMap.end())
+			tileTextureMap.emplace(p.first, TILES_PATH + p.first + FILE_EXTENSION);
 		
-		tileTextureMap.emplace(p.first, TILES_PATH + p.first + FILE_EXTENSION);
 		texNamesAndCount.push_back(p);
 	}
 	

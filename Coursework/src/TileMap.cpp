@@ -54,8 +54,10 @@ void TileMap::InitTiles(TextureManager& textureManager) {
 			tiles[tileIndex].texIndex = uniqueTexturesNames[p.first];
 
 			//push 4 quad coords
-			vertexes.push_back(-0.5f + tiles[tileIndex].x);
-			vertexes.push_back(-0.5f + tiles[tileIndex].y);
+			
+			
+			vertexes.push_back(tiles[tileIndex].x);
+			vertexes.push_back(tiles[tileIndex].y);
 			vertexes.push_back(0.0f + tiles[tileIndex].z);
 			vertexes.push_back(1.0f);
 			vertexes.push_back(1.0f);
@@ -64,8 +66,8 @@ void TileMap::InitTiles(TextureManager& textureManager) {
 			vertexes.push_back(0.0f);
 			vertexes.push_back(tiles[tileIndex].texIndex);
 
-			vertexes.push_back(-0.5f + tiles[tileIndex].x);
-			vertexes.push_back(0.5f + tiles[tileIndex].y);
+			vertexes.push_back(tiles[tileIndex].x);
+			vertexes.push_back(1.0f + tiles[tileIndex].y);
 			vertexes.push_back(0.0f + tiles[tileIndex].z);
 			vertexes.push_back(1.0f);
 			vertexes.push_back(1.0f);
@@ -74,8 +76,8 @@ void TileMap::InitTiles(TextureManager& textureManager) {
 			vertexes.push_back(1.0f);
 			vertexes.push_back(tiles[tileIndex].texIndex);
 
-			vertexes.push_back(0.5f + tiles[tileIndex].x);
-			vertexes.push_back(0.5f + tiles[tileIndex].y);
+			vertexes.push_back(1.0f + tiles[tileIndex].x);
+			vertexes.push_back(1.0f + tiles[tileIndex].y);
 			vertexes.push_back(0.0f + tiles[tileIndex].z);
 			vertexes.push_back(1.0f);
 			vertexes.push_back(1.0f);
@@ -84,8 +86,8 @@ void TileMap::InitTiles(TextureManager& textureManager) {
 			vertexes.push_back(1.0f);
 			vertexes.push_back(tiles[tileIndex].texIndex);
 
-			vertexes.push_back(0.5f + tiles[tileIndex].x);
-			vertexes.push_back(-0.5f + tiles[tileIndex].y);
+			vertexes.push_back(1.0f + tiles[tileIndex].x);
+			vertexes.push_back(tiles[tileIndex].y);
 			vertexes.push_back(0.0f + tiles[tileIndex].z);
 			vertexes.push_back(1.0f);
 			vertexes.push_back(1.0f);

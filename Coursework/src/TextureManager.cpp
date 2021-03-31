@@ -48,20 +48,20 @@ void TextureManager::LoadSpriteTextures(const std::string& filePath) {
 	}
 }
 
-Texture& TextureManager::GetSpriteTexture(const std::string& name) {
+Texture* TextureManager::GetSpriteTexture(const std::string& name) {
 	if (spriteTextureMap.find(name) == spriteTextureMap.end()) {
 		//LOGWARNING
 		printf("default tex for name: %s\n", name);
 	}
-	return spriteTextureMap[name];
+	return &spriteTextureMap[name];
 }
 
-Texture& TextureManager::GetTileTexture(const std::string& name) {
+Texture* TextureManager::GetTileTexture(const std::string& name) {
 	if (tileTextureMap.find(name) == tileTextureMap.end()) {
 		//LOGWARNING
 		printf("default tex for name: %s\n", name);
 	}
-	return tileTextureMap[name];
+	return &tileTextureMap[name];
 }
 
 TextureManager::~TextureManager()

@@ -134,6 +134,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Collision.cpp" />
+    <ClCompile Include="src\AnimationManager.cpp" />
     <ClCompile Include="src\Character.cpp" />
     <ClCompile Include="src\Moveable.cpp" />
     <ClCompile Include="src\InputManager.cpp" />
@@ -155,6 +157,8 @@
     <None Include="res\shaders\Basic.shader" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Collision.h" />
+    <ClInclude Include="src\AnimationManager.h" />
     <ClInclude Include="src\Character.h" />
     <ClInclude Include="src\Moveable.h" />
     <ClInclude Include="src\InputManager.h" />

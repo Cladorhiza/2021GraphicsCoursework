@@ -12,12 +12,12 @@ Sprite::~Sprite()
 {
 }
 
-void Sprite::Init(float colour[3], Texture& texture) {
+void Sprite::Init(float colour[3], Texture* texture) {
 	Rectangle::Init(colour);
 
 	unsigned TextureCoordinateBuffer;
 	
-	this->texture = &texture;
+	this->texture = texture;
 
 	//texcoords
 	float tex[8];

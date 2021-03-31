@@ -6,6 +6,7 @@
 #include <string>
 #include <sstream>
 #include <algorithm>
+#include <chrono>
 
 #include "Shader.h"
 #include "Renderer.h"
@@ -18,51 +19,10 @@
 #include "InputManager.h"
 #include "Util.h"
 #include "Character.h"
+#include "Collision.h"
+#include "AnimationManager.h"
 
-std::vector<std::vector<int>> LoadCollisionMapFromFile(const std::string& filePath) {
 
-	std::vector<std::vector<int>> collisionMap;
-	std::string fileLine;
-	std::fstream file(filePath);
-	std::stringstream ss;
-
-	while (std::getline(file, fileLine)) {
-
-		for (int i = 0; i < fileLine.size(); i++) {
-			if (i >= collisionMap.size()) {
-
-				std::vector<int> v;
-				collisionMap.push_back(v);
-			}
-
-			collisionMap[i].insert(collisionMap[i].begin(), Util::CharDigitToInt(fileLine[i]));
-
-		}
-	}
-
-	return collisionMap;
-}
-
-std::vector<std::pair<int, int>> GetPotentialRectangleCollidersForCircle(std::vector<std::vector<int>>& collisionMap, float x, float y, float size) {
-
-	std::vector<std::pair<int, int>> potentialColliders;
-	std::pair<int, int> circlepos((int)x,(int)y);
-
-	int roundedSize = (int)round(size);
-
-	std::pair<int, int> firstGridCheck(std::max(0, circlepos.first - roundedSize),std::max(0, circlepos.second - roundedSize));
-	std::pair<int, int> lastGridCheck(std::min((int)collisionMap[0].size(), circlepos.first + roundedSize + 1), std::min((int)collisionMap.size(), circlepos.second + roundedSize + 1));
-
-	for (int i = firstGridCheck.first; i < lastGridCheck.first; i++) {
-		for (int j = firstGridCheck.second; j < lastGridCheck.second; j++) {
-			if (collisionMap[i][j] == 1) {
-				std::pair<int, int> p(i, j);
-				potentialColliders.push_back(p);
-			}
-		}
-	}
-	return potentialColliders;
-}
 
 int main(void) {
 	GLFWwindow* window;
@@ -100,18 +60,19 @@ int main(void) {
 	glm::mat4 projectionMatrix = glm::ortho(0.f,16.f,0.f,9.f);
 	
 	InputManager inputManager;
-
+	AnimationManager animationManager(10);
 	TextureManager textureManager;
 	TileMap tilemap(10,10);
 	tilemap.InitTiles(textureManager);
 	textureManager.LoadSpriteTextures("res/maps/testMap/TextureNames.csv");
 
 
-	Character s(1.f, 1.f, 3.f, 3.f, 0.f, .25f, 0.005f);
+	Character s(1.f, 1.f, 3.f, 3.f, 0.f, .25f, 5.f);
 	float colours[] = { 0.f, 0.f, 0.f };
-	s.Init(colours, textureManager.GetSpriteTexture("moon_caster"));
+	s.Init(colours, textureManager.GetSpriteTexture("gimp_idle"));
 
-	std::vector<std::vector<int>> collisionMap = LoadCollisionMapFromFile("res/maps/testMap/CollisionMap.csv");
+	std::vector<std::vector<int>> collisionMap = Collision::LoadCollisionMapFromFile("res/maps/testMap/CollisionMap.csv");
+	std::vector<Sprite> sprites;
 
 	Sprite s1(1.f, 1.f, 0.5f, 5.5f, 0.f);
 	Sprite s2(1.f, 1.f, 1.5f, 5.5f, 0.f);
@@ -131,12 +92,48 @@ int main(void) {
 	s8.Init(colours, textureManager.GetSpriteTexture("gravestone"));
 
 
+	sprites.push_back(s1);
+	sprites.push_back(s2);
+	sprites.push_back(s3);
+	sprites.push_back(s4);
+	sprites.push_back(s5);
+	sprites.push_back(s6);
+	sprites.push_back(s7);
+	sprites.push_back(s8);
+	
+	//delta time code
+	std::chrono::steady_clock::time_point timePrevious = std::chrono::steady_clock::now();
+	float cumElapsed = 0.f;
+	int frameCount = 0;
 
+	Animation anim;
+	anim.index = 0;
+	anim.sprite = &s;
+	anim.textures.push_back(textureManager.GetSpriteTexture("gimp_walk1"));
+	anim.textures.push_back(textureManager.GetSpriteTexture("gimp_walk2"));
+	anim.ticksPerFrame = 2;
 
+	animationManager.AddAnimation(anim);
 
 	/* Loop until the user closes the window */
 	while (!glfwWindowShouldClose(window))
 	{
+		//delta time code
+		std::chrono::steady_clock::time_point timeCurrent = std::chrono::steady_clock::now();
+		float elapsed = ((float)std::chrono::duration_cast<std::chrono::microseconds>(timeCurrent - timePrevious).count())/1000000;
+		timePrevious = std::chrono::steady_clock::now();
+
+		//display framerate in console
+		frameCount++;
+		cumElapsed += elapsed;
+		if (cumElapsed > 1) {
+			cumElapsed = 0;
+			std::cout << frameCount << "fps" << std::endl;
+			frameCount = 0;
+		}
+
+		animationManager.Tick(elapsed);
+		
 		glClearColor(0.0f,0.0f,0.0f,1.f);
 		glClear(GL_COLOR_BUFFER_BIT);
 
@@ -144,15 +141,14 @@ int main(void) {
 		viewMatrix = glm::translate(viewMatrix, glm::vec3(-s.GetX()+8.f, -s.GetY()+4.5f, -s.GetZ()));
 
 		std::vector<std::pair<int, int>> candidateRECTS;
-		s.Move(1.f, inputManager);
-		std::vector<std::pair<int, int>> colls = GetPotentialRectangleCollidersForCircle(collisionMap, s.GetX(), s.GetY(), s.GetSize());
+		s.Move(elapsed, inputManager);
+		std::vector<std::pair<int, int>> colls = Collision::GetPotentialRectangleCollidersForCircle(collisionMap, s.GetX(), s.GetY(), s.GetSize());
 
 		for (std::pair<int,int> p : colls) {
 			
 			if (s.isCollidingRectangle(p.first, p.second)) {
 
-				s.Move(-1.f);
-				std::cout << "COCK";
+				s.Move(-elapsed);
 				break;
 			}
 		}
@@ -161,14 +157,11 @@ int main(void) {
 		/* Render here */
 		renderer.DrawTileMap(tilemap, shader, projectionMatrix, viewMatrix);
 		glEnable(GL_BLEND);
-		renderer.DrawQuad(s1, shader);
-		renderer.DrawQuad(s2, shader);
-		renderer.DrawQuad(s3, shader);
-		renderer.DrawQuad(s4, shader);
-		renderer.DrawQuad(s5, shader);
-		renderer.DrawQuad(s6, shader);
-		renderer.DrawQuad(s7, shader);
-		renderer.DrawQuad(s8, shader);
+
+		for (Sprite& sproit : sprites) {
+			renderer.DrawQuad(sproit, shader);
+		}
+
 		renderer.DrawQuad(s, shader);
 
 		glDisable(GL_BLEND);

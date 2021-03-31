@@ -156,7 +156,7 @@ std::vector<TileMap::Tile>::iterator TileMap::end() {
 void TileMap::Bind() {
 	glBindVertexArray(vao);
 	for (std::pair<const std::string, int>& t : uniqueTexturesNames) {
-		manager->GetTileTexture(t.first).Bind(t.second);
+		manager->GetTileTexture(t.first)->Bind(t.second);
 	}
 }
 void TileMap::Unbind() {

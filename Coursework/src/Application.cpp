@@ -20,7 +20,6 @@
 #include "Util.h"
 #include "Character.h"
 #include "Collision.h"
-#include "AnimationManager.h"
 
 
 
@@ -54,22 +53,39 @@ int main(void) {
 
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
+
 	Shader shader("res/shaders/Basic.shader");
 	Renderer renderer;
 	glm::mat4 viewMatrix(1.0f);
 	glm::mat4 projectionMatrix = glm::ortho(0.f,16.f,0.f,9.f);
 	
 	InputManager inputManager;
-	AnimationManager animationManager(10);
 	TextureManager textureManager;
 	TileMap tilemap(10,10);
 	tilemap.InitTiles(textureManager);
 	textureManager.LoadSpriteTextures("res/maps/testMap/TextureNames.csv");
 
 
+	std::vector<std::vector<Texture*>> animations;
+	std::vector<std::string> leftFrames{"character_left1", "character_left2"};
+	std::vector<std::string> rightFrames{"character_right1", "character_right2"};
+	std::vector<std::string> upFrames{"character_up1", "character_up2"};
+	std::vector<std::string> downFrames{"character_down1", "character_down2"};
+
+	std::vector<Texture*> leftAnimation = textureManager.GetSpriteTextures(leftFrames);
+	std::vector<Texture*> rightAnimation = textureManager.GetSpriteTextures(rightFrames);
+	std::vector<Texture*> upAnimation = textureManager.GetSpriteTextures(upFrames);
+	std::vector<Texture*> downAnimation = textureManager.GetSpriteTextures(downFrames);
+
+	animations.push_back(leftAnimation);
+	animations.push_back(rightAnimation);
+	animations.push_back(upAnimation);
+	animations.push_back(downAnimation);
+	
+
 	Character s(1.f, 1.f, 3.f, 3.f, 0.f, .25f, 5.f);
 	float colours[] = { 0.f, 0.f, 0.f };
-	s.Init(colours, textureManager.GetSpriteTexture("gimp_idle"));
+	s.Init(colours, textureManager.GetSpriteTexture("character_idle"), animations);
 
 	std::vector<std::vector<int>> collisionMap = Collision::LoadCollisionMapFromFile("res/maps/testMap/CollisionMap.csv");
 	std::vector<Sprite> sprites;
@@ -106,14 +122,6 @@ int main(void) {
 	float cumElapsed = 0.f;
 	int frameCount = 0;
 
-	Animation anim;
-	anim.index = 0;
-	anim.sprite = &s;
-	anim.textures.push_back(textureManager.GetSpriteTexture("gimp_walk1"));
-	anim.textures.push_back(textureManager.GetSpriteTexture("gimp_walk2"));
-	anim.ticksPerFrame = 2;
-
-	animationManager.AddAnimation(anim);
 
 	/* Loop until the user closes the window */
 	while (!glfwWindowShouldClose(window))
@@ -131,9 +139,6 @@ int main(void) {
 			std::cout << frameCount << "fps" << std::endl;
 			frameCount = 0;
 		}
-
-		animationManager.Tick(elapsed);
-		
 		glClearColor(0.0f,0.0f,0.0f,1.f);
 		glClear(GL_COLOR_BUFFER_BIT);
 
@@ -161,7 +166,7 @@ int main(void) {
 		for (Sprite& sproit : sprites) {
 			renderer.DrawQuad(sproit, shader);
 		}
-
+		
 		renderer.DrawQuad(s, shader);
 
 		glDisable(GL_BLEND);

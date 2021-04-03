@@ -3,6 +3,12 @@ moon_caster
 sun_caster
 gravestone
 tree
-gimp_idle
-gimp_walk1
-gimp_walk2
+character_idle
+character_left1
+character_left2
+character_right1
+character_right2
+character_up1
+character_up2
+character_down1
+character_down2

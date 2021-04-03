@@ -64,6 +64,15 @@ Texture* TextureManager::GetTileTexture(const std::string& name) {
 	return &tileTextureMap[name];
 }
 
+std::vector<Texture*> TextureManager::GetSpriteTextures(const std::vector<std::string>& names) {
+
+	std::vector<Texture*> textures;
+	for (const std::string& s : names) {
+		textures.push_back(GetSpriteTexture(s));
+	}
+
+	return textures;
+}
 TextureManager::~TextureManager()
 {
 }

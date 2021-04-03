@@ -17,6 +17,7 @@ public:
 	void LoadSpriteTextures(const std::string& filePath);
 	Texture* GetSpriteTexture(const std::string& name);
 	Texture* GetTileTexture(const std::string& name);
+	std::vector<Texture*> GetSpriteTextures(const std::vector<std::string>& names);
 	~TextureManager();
 };
 

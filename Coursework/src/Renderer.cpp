@@ -2,6 +2,7 @@
 
 
 
+
 Renderer::Renderer()
 {
 	unsigned squareIndexes[6]{ 0,1,2,0,2,3 };
@@ -18,10 +19,19 @@ Renderer::~Renderer()
 void Renderer::DrawQuad(Shape& sprite, Shader& shader) {
 	shader.Bind();
 	sprite.Bind();
-	shader.SetUniformvec3f("worldPosition", sprite.GetX(), sprite.GetY(), sprite.GetZ());
+	shader.SetUniformvec3f("WorldPosition", sprite.GetX(), sprite.GetY(), sprite.GetZ());
+	shader.SetUniform1f("Rotation", sprite.GetRotation());
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, squareIndexBuffer);
 	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
-	shader.SetUniformvec3f("worldPosition", 0.0f,0.0f,0.0f);
+	shader.SetUniformvec3f("WorldPosition", 0.0f,0.0f,0.0f);
+	shader.SetUniform1f("Rotation", 0.f);
+}
+
+void Renderer::DrawCharacter(Character& character, Shader& shader) {
+	DrawQuad(character, shader);	
+	
+	if (character.GetSword().IsDamaging()) 
+		DrawQuad(character.GetSword(), shader);
 }
 
 

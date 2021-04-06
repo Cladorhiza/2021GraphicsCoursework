@@ -83,7 +83,7 @@ int main(void) {
 	animations.push_back(downAnimation);
 	
 
-	Character s(1.f, 1.f, 3.f, 3.f, 0.f, .25f, 5.f);
+	Character s(1.f, 1.f, 3.f, 3.f, 0.f, .5f, 5.f);
 	float colours[] = { 0.f, 0.f, 0.f };
 	s.Init(colours, textureManager.GetSpriteTexture("character_idle"), animations);
 
@@ -139,14 +139,18 @@ int main(void) {
 			std::cout << frameCount << "fps" << std::endl;
 			frameCount = 0;
 		}
+		
+		//reset openGL
 		glClearColor(0.0f,0.0f,0.0f,1.f);
 		glClear(GL_COLOR_BUFFER_BIT);
 
+		//set up camera centered on player
 		viewMatrix = glm::mat4(1.f);
 		viewMatrix = glm::translate(viewMatrix, glm::vec3(-s.GetX()+8.f, -s.GetY()+4.5f, -s.GetZ()));
 
+		//basic collisions between player and terrain
 		std::vector<std::pair<int, int>> candidateRECTS;
-		s.Move(elapsed, inputManager);
+		s.Update(elapsed, inputManager);
 		std::vector<std::pair<int, int>> colls = Collision::GetPotentialRectangleCollidersForCircle(collisionMap, s.GetX(), s.GetY(), s.GetSize());
 
 		for (std::pair<int,int> p : colls) {
@@ -166,8 +170,7 @@ int main(void) {
 		for (Sprite& sproit : sprites) {
 			renderer.DrawQuad(sproit, shader);
 		}
-		
-		renderer.DrawQuad(s, shader);
+		renderer.DrawCharacter(s, shader);
 
 		glDisable(GL_BLEND);
 		/* Swap front and back buffers */

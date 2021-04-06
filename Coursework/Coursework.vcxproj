@@ -134,6 +134,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Projectile.cpp" />
     <ClCompile Include="src\Collision.cpp" />
     <ClCompile Include="src\Character.cpp" />
     <ClCompile Include="src\Moveable.cpp" />
@@ -156,6 +157,7 @@
     <None Include="res\shaders\Basic.shader" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Projectile.h" />
     <ClInclude Include="src\Collision.h" />
     <ClInclude Include="src\Character.h" />
     <ClInclude Include="src\Moveable.h" />

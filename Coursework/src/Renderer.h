@@ -3,6 +3,7 @@
 #include "Shape.h"
 #include "Shader.h"
 #include "TileMap.h"
+#include "Character.h"
 class Renderer
 {
 private:
@@ -12,6 +13,7 @@ public:
 	Renderer();
 	~Renderer();
 	void DrawQuad(Shape& sprite, Shader& shader);
+	void DrawCharacter(Character& character, Shader& shader);
 	void DrawTileMap(TileMap& tilemap, Shader& shader, const glm::mat4& projectionMatrix, const glm::mat4& viewMatrix);
 };
 

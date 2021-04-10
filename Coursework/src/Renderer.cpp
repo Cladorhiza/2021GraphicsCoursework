@@ -32,6 +32,8 @@ void Renderer::DrawCharacter(Character& character, Shader& shader) {
 	
 	if (character.GetSword().IsDamaging()) 
 		DrawQuad(character.GetSword(), shader);
+	if (character.GetRock().IsDamaging())
+		DrawQuad(character.GetRock(), shader);
 }
 
 

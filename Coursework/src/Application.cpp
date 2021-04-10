@@ -83,39 +83,19 @@ int main(void) {
 	animations.push_back(downAnimation);
 	
 
-	Character s(1.f, 1.f, 3.f, 3.f, 0.f, .5f, 5.f);
-	float colours[] = { 0.f, 0.f, 0.f };
-	s.Init(colours, textureManager.GetSpriteTexture("character_idle"), animations);
+
+
+
+
 
 	std::vector<std::vector<int>> collisionMap = Collision::LoadCollisionMapFromFile("res/maps/testMap/CollisionMap.csv");
 	std::vector<Sprite> sprites;
 
-	Sprite s1(1.f, 1.f, 0.5f, 5.5f, 0.f);
-	Sprite s2(1.f, 1.f, 1.5f, 5.5f, 0.f);
-	Sprite s3(1.f, 1.f, 2.5f, 5.5f, 0.f);
-	Sprite s4(1.f, 1.f, 3.5f, 5.5f, 0.f);
-	Sprite s5(1.f, 1.f, 6.5f, 5.5f, 0.f);
-	Sprite s6(1.f, 1.f, 7.5f, 5.5f, 0.f);
-	Sprite s7(1.f, 1.f, 8.5f, 5.5f, 0.f);
-	Sprite s8(1.f, 1.f, 9.5f, 5.5f, 0.f);
-	s1.Init(colours, textureManager.GetSpriteTexture("gravestone"));
-	s2.Init(colours, textureManager.GetSpriteTexture("gravestone"));
-	s3.Init(colours, textureManager.GetSpriteTexture("gravestone"));
-	s4.Init(colours, textureManager.GetSpriteTexture("gravestone"));
-	s5.Init(colours, textureManager.GetSpriteTexture("gravestone"));
-	s6.Init(colours, textureManager.GetSpriteTexture("gravestone"));
-	s7.Init(colours, textureManager.GetSpriteTexture("gravestone"));
-	s8.Init(colours, textureManager.GetSpriteTexture("gravestone"));
+	Character s(1.f, 1.f, 3.f, 3.f, 0.f, .5f, 5.f);
+	float colours[] = { 0.f, 0.f, 0.f };
+	s.Init(colours, textureManager.GetSpriteTexture("character_idle"), animations);
 
 
-	sprites.push_back(s1);
-	sprites.push_back(s2);
-	sprites.push_back(s3);
-	sprites.push_back(s4);
-	sprites.push_back(s5);
-	sprites.push_back(s6);
-	sprites.push_back(s7);
-	sprites.push_back(s8);
 	
 	//delta time code
 	std::chrono::steady_clock::time_point timePrevious = std::chrono::steady_clock::now();
@@ -148,19 +128,8 @@ int main(void) {
 		viewMatrix = glm::mat4(1.f);
 		viewMatrix = glm::translate(viewMatrix, glm::vec3(-s.GetX()+8.f, -s.GetY()+4.5f, -s.GetZ()));
 
-		//basic collisions between player and terrain
-		std::vector<std::pair<int, int>> candidateRECTS;
-		s.Update(elapsed, inputManager);
-		std::vector<std::pair<int, int>> colls = Collision::GetPotentialRectangleCollidersForCircle(collisionMap, s.GetX(), s.GetY(), s.GetSize());
-
-		for (std::pair<int,int> p : colls) {
-			
-			if (s.isCollidingRectangle(p.first, p.second)) {
-
-				s.Move(-elapsed);
-				break;
-			}
-		}
+		
+		s.Update(elapsed, inputManager, collisionMap);
 		
 		
 		/* Render here */

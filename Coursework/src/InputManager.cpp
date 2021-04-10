@@ -9,6 +9,7 @@ InputManager::InputManager()
 	keys[GLFW_KEY_S] = GLFW_RELEASE;
 	keys[GLFW_KEY_D] = GLFW_RELEASE;
 	keys[GLFW_KEY_L] = GLFW_RELEASE;
+	keys[GLFW_KEY_K] = GLFW_RELEASE;
 }
 
 void InputManager::Poll(GLFWwindow* window) {
@@ -25,6 +26,8 @@ void InputManager::Poll(GLFWwindow* window) {
 	keys[GLFW_KEY_D] = state;	
 	state = glfwGetKey(window, GLFW_KEY_L);
 	keys[GLFW_KEY_L] = state;
+	state = glfwGetKey(window, GLFW_KEY_K);
+	keys[GLFW_KEY_K] = state;
 	
 
 }

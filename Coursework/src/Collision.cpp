@@ -35,7 +35,7 @@ std::vector<std::pair<int, int>> Collision::GetPotentialRectangleCollidersForCir
 	std::vector<std::pair<int, int>> potentialColliders;
 	std::pair<int, int> circlepos((int)x, (int)y);
 
-	int roundedSize = (int)round(size);
+	int roundedSize = (int)(size+1);
 
 	std::pair<int, int> firstGridCheck(std::max(0, circlepos.first - roundedSize), std::max(0, circlepos.second - roundedSize));
 	std::pair<int, int> lastGridCheck(std::min((int)collisionMap[0].size(), circlepos.first + roundedSize + 1), std::min((int)collisionMap.size(), circlepos.second + roundedSize + 1));

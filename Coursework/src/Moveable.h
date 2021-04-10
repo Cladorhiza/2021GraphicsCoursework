@@ -16,6 +16,6 @@ public:
 	inline void SetSize(float s) { size = s; }
 	inline float GetSize() { return size; }
 	bool isCollidingCircle(Moveable& m);
-	bool isCollidingRectangle(int x, int y);
+	virtual bool isCollidingRectangle(int x, int y);
 };
 

@@ -134,6 +134,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Enemy.cpp" />
     <ClCompile Include="src\Projectile.cpp" />
     <ClCompile Include="src\Collision.cpp" />
     <ClCompile Include="src\Character.cpp" />
@@ -152,11 +153,13 @@
     <ClCompile Include="src\Texture.cpp" />
     <ClCompile Include="src\TileMap.cpp" />
     <ClCompile Include="src\TextureManager.cpp" />
+    <ClCompile Include="src\ThrowingRock.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="res\shaders\Basic.shader" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Enemy.h" />
     <ClInclude Include="src\Projectile.h" />
     <ClInclude Include="src\Collision.h" />
     <ClInclude Include="src\Character.h" />
@@ -174,6 +177,7 @@
     <ClInclude Include="src\Texture.h" />
     <ClInclude Include="src\TileMap.h" />
     <ClInclude Include="src\TextureManager.h" />
+    <ClInclude Include="src\ThrowingRock.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,5 +1,8 @@
 #include "Character.h"
+
 #include <iostream>
+
+#include "Collision.h"
 
 
 
@@ -13,9 +16,9 @@ void Character::Move(float timeStep) {
 	Translate(velocity.x * timeStep, velocity.y * timeStep, 0.0f);
 }
 
-void Character::Update(float timeStep, InputManager& inputManager) {
-
-	//Attacks
+void Character::Update(float timeStep, InputManager& inputManager, std::vector<std::vector<int>>& collisionMap) {
+	
+	//Sword Attack
 	if (inputManager.getKeyState(GLFW_KEY_L) == GLFW_PRESS) {
 		swordSwing->SetDamaging(true);
 	}
@@ -23,26 +26,37 @@ void Character::Update(float timeStep, InputManager& inputManager) {
 
 	if (swordSwing->IsDamaging()) {
 		if (facingDown) {
-			swordSwing->SetPosition(GetX(), GetY() - swordSwing->GetSize(), GetZ());
+			swordSwing->SetPosition(x, y - swordSwing->GetSize(), z);
 			swordSwing->SetRotation(3.1415f);
 		}
 		else if (facingUp) {
-			swordSwing->SetPosition(GetX(), GetY() + swordSwing->GetSize(), GetZ());
+			swordSwing->SetPosition(x, y + swordSwing->GetSize(), z);
 			swordSwing->SetRotation(0.f);
 		}
 		else if (facingLeft) {
-			swordSwing->SetPosition(GetX() - swordSwing->GetSize(), GetY(), GetZ());
+			swordSwing->SetPosition(x - swordSwing->GetSize(), y, z);
 			swordSwing->SetRotation(4.7123f);
 		}
 		else if (facingRight) {
-			swordSwing->SetPosition(GetX() + swordSwing->GetSize(), GetY(), GetZ());
+			swordSwing->SetPosition(x + swordSwing->GetSize(), y, z);
 			swordSwing->SetRotation(1.5708f);
 		}
 		//if not moving
 		else {
-			swordSwing->SetPosition(GetX(), GetY() - swordSwing->GetSize(), GetZ());
+			swordSwing->SetPosition(x, y - swordSwing->GetSize(), z);
 			swordSwing->SetRotation(3.1415f);
 		}
+	}
+	//Throwing Attack
+	if (rockThrow->IsDamaging()) {
+
+		rockThrow->Update(timeStep, collisionMap);
+	}
+	else if (inputManager.getKeyState(GLFW_KEY_K) == GLFW_PRESS) {
+
+		rockThrow->SetPosition(x, y, z);
+		rockThrow->SetVelocity(velocity);
+		rockThrow->SetDamaging(true);
 	}
 
 	//WASD movement
@@ -90,6 +104,15 @@ void Character::Update(float timeStep, InputManager& inputManager) {
 	}
 	else velocity = glm::vec2(0.f, 0.f);
 	Animate(timeStep);
+
+	//basic collisions between player and terrain
+	std::vector<std::pair<int, int>> colls = Collision::GetPotentialRectangleCollidersForCircle(collisionMap, x, y, size);
+
+	for (std::pair<int, int> p : colls) {
+
+		isCollidingRectangle(p.first, p.second);
+
+	}
 }
 
 void Character::Animate(float timeStep) {
@@ -101,7 +124,7 @@ void Character::Animate(float timeStep) {
 	
 	
 	if (swordSwing->IsDamaging()) 
-			swordSwing->SetRotation(swordSwing->GetRotation() + timeStep * 500);
+			swordSwing->SetRotation(swordSwing->GetRotation() + timeStep * 100);
 	else animationTimer += timeStep;
 
 	if (animationTimer > 0.1f) {
@@ -129,10 +152,12 @@ void Character::Init(float colour[3], Texture* texture, std::vector<std::vector<
 
 
 	sword.Init("res/textures/sprites/sword_swing.png");
-	swordSwing.reset(new Projectile(1.f, 1.f, 0.f, 0.f, 0.f, 1.f, false));
+	swordSwing.reset(new Projectile(1.f, 1.f, 0.f, 0.f, 0.f, 0.5f, false, false));
 	swordSwing->Init(colour, &sword);
 
-
+	rock.Init("res/textures/sprites/throwing_rock.png");
+	rockThrow.reset(new ThrowingRock(0.3f, 0.3f, 0.f, 0.f, 0.f, 0.15f, false, true));
+	rockThrow->Init(colour, &rock);
 
 	idle = texture;
 	leftAnimation = animations[0];

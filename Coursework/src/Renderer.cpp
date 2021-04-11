@@ -36,6 +36,15 @@ void Renderer::DrawCharacter(Character& character, Shader& shader) {
 		DrawQuad(character.GetRock(), shader);
 }
 
+void Renderer::DrawRangedEnemy(RangedEnemy& enemy, Shader& shader) {
+	DrawQuad(enemy, shader);
+
+	for (int i = 0; i < 5; i++) {
+		if (enemy.getBullets()[i]->IsDamaging())
+			DrawQuad(*enemy.getBullets()[i], shader);
+	}
+
+}
 
 void Renderer::DrawTileMap(TileMap& tilemap, Shader& shader, const glm::mat4& projectionMatrix, const glm::mat4& viewMatrix) {
 

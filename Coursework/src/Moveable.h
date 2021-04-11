@@ -15,7 +15,6 @@ public:
 	inline glm::vec2& GetVelocity() { return velocity; }
 	inline void SetSize(float s) { size = s; }
 	inline float GetSize() { return size; }
-	bool isCollidingCircle(Moveable& m);
 	virtual bool isCollidingRectangle(int x, int y);
 };
 

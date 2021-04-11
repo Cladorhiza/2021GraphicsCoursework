@@ -156,7 +156,7 @@ void Character::Init(float colour[3], Texture* texture, std::vector<std::vector<
 	swordSwing->Init(colour, &sword);
 
 	rock.Init("res/textures/sprites/throwing_rock.png");
-	rockThrow.reset(new ThrowingRock(0.3f, 0.3f, 0.f, 0.f, 0.f, 0.15f, false, true));
+	rockThrow.reset(new ThrowingRock(0.3f, 0.3f, 0.f, 0.f, 0.f, 0.15f, false, true, true, 3.f));
 	rockThrow->Init(colour, &rock);
 
 	idle = texture;

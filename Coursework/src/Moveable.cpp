@@ -9,10 +9,6 @@ Moveable::Moveable(float width, float height, float positionX, float positionY, 
 	velocity = glm::vec2(0, 0);
 }
 
-bool Moveable::isCollidingCircle(Moveable& m) {
-	
-	return ((m.GetX() - x) * (m.GetX() - x) + (m.GetY() - y) * (m.GetY() - y)) < (m.GetSize() + size) * (m.GetSize() + size);
-}
 bool Moveable::isCollidingRectangle(int rectX, int rectY) {
 
 	glm::vec2 nearestPoint;

@@ -31,17 +31,19 @@ bool Projectile::isCollidingRectangle(int rectX, int rectY) {
 			float pointDiffx = std::abs(round(nearestPoint.x) - nearestPoint.x);
 			float pointDiffy = std::abs(round(nearestPoint.y) - nearestPoint.y);
 			if (pointDiffx < pointDiffy) {
-				SetVelocity(glm::vec2(-velocity.x, velocity.y));
+				SetVelocity(glm::vec2(-velocity.x, velocity.y) * 0.8f);
 			}
 			else if (pointDiffx == pointDiffy) {
 				float speed = glm::length(velocity);
-				SetVelocity(-vecToNearest * speed);
+				SetVelocity(-vecToNearest * speed * 0.8f);
 			}
 			else {
-				SetVelocity(glm::vec2(velocity.x, -velocity.y));
+				SetVelocity(glm::vec2(velocity.x, -velocity.y) * 0.8f);
 			}
 
 		}
+		else 
+			damaging = false;
 		return true;
 		 
 	}

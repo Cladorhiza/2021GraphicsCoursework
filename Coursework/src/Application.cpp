@@ -20,7 +20,9 @@
 #include "Util.h"
 #include "Character.h"
 #include "Collision.h"
-
+#include "Enemy.h"
+#include "PatrolEnemy.h"
+#include "RangedEnemy.h"
 
 
 int main(void) {
@@ -95,8 +97,13 @@ int main(void) {
 	float colours[] = { 0.f, 0.f, 0.f };
 	s.Init(colours, textureManager.GetSpriteTexture("character_idle"), animations);
 
-
+	PatrolEnemy foadster(1.f, 1.f, 8.f, 8.f, 0.f, 0.5f, 3.f, 2.f);
+	foadster.setPatrols(glm::vec2(8.f, 8.f), glm::vec2(2.f, 8.f));
+	foadster.Init(colours, textureManager.GetSpriteTexture("canj"));
 	
+	RangedEnemy rangedGimp(1.f, 1.f, 5.f, 5.f, 0.f, 0.5, 4, 0.f);
+	rangedGimp.Init(colours, textureManager.GetSpriteTexture("canj"));
+
 	//delta time code
 	std::chrono::steady_clock::time_point timePrevious = std::chrono::steady_clock::now();
 	float cumElapsed = 0.f;
@@ -112,13 +119,13 @@ int main(void) {
 		timePrevious = std::chrono::steady_clock::now();
 
 		//display framerate in console
-		frameCount++;
-		cumElapsed += elapsed;
-		if (cumElapsed > 1) {
-			cumElapsed = 0;
-			std::cout << frameCount << "fps" << std::endl;
-			frameCount = 0;
-		}
+		//frameCount++;
+		//cumElapsed += elapsed;
+		//if (cumElapsed > 1) {
+		//	cumElapsed = 0;
+		//	std::cout << frameCount << "fps" << std::endl;
+		//	frameCount = 0;
+		//}
 		
 		//reset openGL
 		glClearColor(0.0f,0.0f,0.0f,1.f);
@@ -128,9 +135,14 @@ int main(void) {
 		viewMatrix = glm::mat4(1.f);
 		viewMatrix = glm::translate(viewMatrix, glm::vec3(-s.GetX()+8.f, -s.GetY()+4.5f, -s.GetZ()));
 
+		if (foadster.IsAlive())
+			foadster.Update(elapsed, s, collisionMap);
+		if (rangedGimp.IsAlive()) 
+			rangedGimp.Update(elapsed, s, collisionMap);
+		
+
 		
 		s.Update(elapsed, inputManager, collisionMap);
-		
 		
 		/* Render here */
 		renderer.DrawTileMap(tilemap, shader, projectionMatrix, viewMatrix);
@@ -140,8 +152,23 @@ int main(void) {
 			renderer.DrawQuad(sproit, shader);
 		}
 		renderer.DrawCharacter(s, shader);
+		if (foadster.IsAlive()) 
+			renderer.DrawQuad(foadster, shader);
+		if (rangedGimp.IsAlive())
+			renderer.DrawRangedEnemy(rangedGimp, shader);
+
 
 		glDisable(GL_BLEND);
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		/* Swap front and back buffers */
 		glfwSwapBuffers(window);
 

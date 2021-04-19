@@ -16,13 +16,22 @@ protected:
 	unsigned vbo, vao, ibo;
 	TextureManager* manager;
 public:
+	struct Tile {
+		float x, y, z;
+		float texIndex;
+	};
 	TileMap(int sizeX, int sizeY);
-	void InitTiles(TextureManager& textureManager);
+	void InitTiles(TextureManager& textureManager, const std::string& textureMapPath);
 	~TileMap();
 	std::vector<Tile>::iterator begin();
 	std::vector<Tile>::iterator end();
 	void Bind();
 	void Unbind();
 	int Size();
+	inline std::unordered_map<std::string, int>& GetUniqueTextureNames() { return uniqueTexturesNames; }
+	Tile& GetTileByCoordinate(float x, float y);
+	void build();
+	void SetTileTextureByCoordinateAlreadyBuilt(float x, float y, const std::string texName);
+	std::string ExportAsString();
 };
 

@@ -2,10 +2,7 @@
 
 #include "TileMap.h"
 
-struct TileMap::Tile{
-	float x, y, z;
-	float texIndex;
-};
+
 
 TileMap::TileMap(int sizeX, int sizeY)
 	:worldXMax(sizeX), worldYMax(sizeY), manager(nullptr)
@@ -30,20 +27,19 @@ TileMap::TileMap(int sizeX, int sizeY)
 
 }
 
-void TileMap::InitTiles(TextureManager& textureManager) {
+void TileMap::InitTiles(TextureManager& textureManager, const std::string& textureMapPath) {
 	
 	manager = &textureManager;
-	std::vector<std::pair<std::string, int>> texNamesAndCounts = textureManager.LoadTileTextures("res/maps/testMap/TextureMap.csv");
+	std::vector<std::pair<std::string, int>> texNamesAndCounts = textureManager.LoadTileTextures(textureMapPath);
 	int uniqueTexCount = 0;
 	int indexCount = 0;
 	size_t tileIndex = 0;
-
-	//if (texNames.size() != tiles.size()) {
-	//	printf("size mismatch error");
-	//	//LOGWARNING
-	//}
+	int tileCount = 0;
+	
 
 	for (std::pair<std::string, int>& p : texNamesAndCounts) {
+		
+		tileCount += p.second;
 
 		for (int i = 0; i < p.second; i++) {
 
@@ -114,31 +110,13 @@ void TileMap::InitTiles(TextureManager& textureManager) {
 		}
 
 	}
-	glGenVertexArrays(1, &vao);
-	glBindVertexArray(vao);
 
-	glGenBuffers(1, &vbo);
-	glBindBuffer(GL_ARRAY_BUFFER, vbo);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * vertexes.size(), vertexes.data(), GL_STATIC_DRAW);
-
-	glEnableVertexArrayAttrib(vao, 0);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 9 * sizeof(float), (const void*)0);
-
-	glEnableVertexArrayAttrib(vao, 1);
-	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 9 * sizeof(float), (const void*)(3 * sizeof(float)));
-
-	glEnableVertexArrayAttrib(vao, 2);
-	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 9 * sizeof(float), (const void*)(6 * sizeof(float)));
-
-	glEnableVertexArrayAttrib(vao, 3);
-	glVertexAttribPointer(3, 1, GL_FLOAT, GL_FALSE, 9 * sizeof(float), (const void*)(8 * sizeof(float)));
-
+	if (tileCount != tiles.size()) {
+		printf("size mismatch error");
+		//LOGWARNING
+	}
 	
-	glGenBuffers(1, &ibo);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned) * indexes.size(), indexes.data(), GL_STATIC_DRAW);
-	
-
+	build();
 
 }
 
@@ -170,4 +148,105 @@ void TileMap::Unbind() {
 
 int TileMap::Size() {
 	return tiles.size();
+}
+
+TileMap::Tile& TileMap::GetTileByCoordinate(float x, float y) {
+
+	return tiles[((int)x + ((int)y * worldXMax))];
+}
+
+void TileMap::SetTileTextureByCoordinateAlreadyBuilt(float x, float y, const std::string texName) {
+	int texID = uniqueTexturesNames[texName];
+
+	vertexes[36*((int)x + ((int)y * worldXMax)) + 8]  = texID;
+	vertexes[36*((int)x + ((int)y * worldXMax)) + 17] = texID;
+	vertexes[36*((int)x + ((int)y * worldXMax)) + 26] = texID;
+	vertexes[36*((int)x + ((int)y * worldXMax)) + 35] = texID;
+
+	GetTileByCoordinate(x, y).texIndex = uniqueTexturesNames[texName];
+
+	build();
+}
+void TileMap::build() {
+
+	glGenVertexArrays(1, &vao);
+	glBindVertexArray(vao);
+
+	glGenBuffers(1, &vbo);
+	glBindBuffer(GL_ARRAY_BUFFER, vbo);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * vertexes.size(), vertexes.data(), GL_STATIC_DRAW);
+
+	glEnableVertexArrayAttrib(vao, 0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 9 * sizeof(float), (const void*)0);
+
+	glEnableVertexArrayAttrib(vao, 1);
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 9 * sizeof(float), (const void*)(3 * sizeof(float)));
+
+	glEnableVertexArrayAttrib(vao, 2);
+	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 9 * sizeof(float), (const void*)(6 * sizeof(float)));
+
+	glEnableVertexArrayAttrib(vao, 3);
+	glVertexAttribPointer(3, 1, GL_FLOAT, GL_FALSE, 9 * sizeof(float), (const void*)(8 * sizeof(float)));
+
+
+	glGenBuffers(1, &ibo);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned) * indexes.size(), indexes.data(), GL_STATIC_DRAW);
+
+
+
+
+}
+
+std::string TileMap::ExportAsString() {
+
+
+	std::unordered_map<int, std::string> indexToTexName;
+
+	for (std::pair<std::string, int> p : uniqueTexturesNames) {
+		indexToTexName[p.second] = p.first;
+	}
+
+	std::string fileString = "";
+
+	int currentTexIndex = 0;
+	int tilesInARow = 0;
+
+	for (int i = 0; i < 32; i++) {
+
+		for (int j = 0; j < 64; j++) {
+
+			Tile& t = GetTileByCoordinate(j, i);
+
+			if (j == 0 && i == 0) {
+				currentTexIndex = t.texIndex;
+				fileString += indexToTexName[currentTexIndex];
+			}
+
+			if (t.texIndex != currentTexIndex) {
+
+				fileString += ", ";
+				fileString += std::to_string(tilesInARow);
+				fileString += "\n";
+
+				
+				currentTexIndex = t.texIndex;
+				fileString += indexToTexName[currentTexIndex];
+				tilesInARow = 1;
+			}
+			else {
+				tilesInARow++;
+			}
+
+		}
+
+
+	}
+
+	fileString += ", ";
+	fileString += std::to_string(tilesInARow);
+
+	return fileString;
+
+
 }

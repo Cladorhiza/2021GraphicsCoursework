@@ -28,8 +28,11 @@ void InputManager::Poll(GLFWwindow* window) {
 	keys[GLFW_KEY_L] = state;
 	state = glfwGetKey(window, GLFW_KEY_K);
 	keys[GLFW_KEY_K] = state;
-	
+	state = glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT);
+	keys[GLFW_MOUSE_BUTTON_LEFT] = state;
 
+
+	glfwGetCursorPos(window, &xpos, &ypos);
 }
 
 int InputManager::getKeyState(int GLFWKeyCode) {

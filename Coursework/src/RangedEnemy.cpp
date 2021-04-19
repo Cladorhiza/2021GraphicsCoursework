@@ -16,7 +16,7 @@ void RangedEnemy::Move(float timeStep) {
 
 void RangedEnemy::Update(float timeStep, Character& c, std::vector<std::vector<int>>& collisionMap) {
 
-	bool attacking = Collision::isCollidingCircle(x, y, scanRadius, c.GetX(), c.GetY(), c.GetSize());
+	bool attacking = Collision::IsCollidingCircle(x, y, scanRadius, c.GetX(), c.GetY(), c.GetSize());
 
 	if (attacking) {
 		
@@ -65,7 +65,7 @@ void RangedEnemy::Update(float timeStep, Character& c, std::vector<std::vector<i
 		if (gunFire[i]->IsDamaging())
 			gunFire[i]->Update(timeStep, collisionMap);
 
-		if (Collision::isCollidingCircle(gunFire[i]->GetX(), gunFire[i]->GetY(), gunFire[i]->GetSize(), c.GetX(), c.GetY(), c.GetSize()) && gunFire[i]->IsDamaging()) {
+		if (Collision::IsCollidingCircle(gunFire[i]->GetX(), gunFire[i]->GetY(), gunFire[i]->GetSize(), c.GetX(), c.GetY(), c.GetSize()) && gunFire[i]->IsDamaging()) {
 			//player dead
 
 
@@ -73,20 +73,20 @@ void RangedEnemy::Update(float timeStep, Character& c, std::vector<std::vector<i
 		}
 	}
 	//if rock hit it
-	if (Collision::isCollidingCircle(x, y, size, c.GetRock().GetX(), c.GetRock().GetY(), c.GetRock().GetSize()) && c.GetRock().IsDamaging()) {
+	if (Collision::IsCollidingCircle(x, y, size, c.GetRock().GetX(), c.GetRock().GetY(), c.GetRock().GetSize()) && c.GetRock().IsDamaging()) {
 		//dead
 		alive = false;
 		printf("rock");
 		c.GetRock().SetDamaging(false);
 	}
 	//if sword hit it
-	if (Collision::isCollidingCircle(x, y, size, c.GetSword().GetX(), c.GetSword().GetY(), c.GetSword().GetSize()) && c.GetSword().IsDamaging()) {
+	if (Collision::IsCollidingCircle(x, y, size, c.GetSword().GetX(), c.GetSword().GetY(), c.GetSword().GetSize()) && c.GetSword().IsDamaging()) {
 		//dead
 		alive = false;
 		printf("sword");
 	}
 	//if collides with player
-	if (Collision::isCollidingCircle(x, y, size, c.GetX(), c.GetY(), c.GetSize())) {
+	if (Collision::IsCollidingCircle(x, y, size, c.GetX(), c.GetY(), c.GetSize())) {
 		//player dead
 
 	}
@@ -96,7 +96,7 @@ void RangedEnemy::Update(float timeStep, Character& c, std::vector<std::vector<i
 
 void RangedEnemy::Init(float colour[3], Texture* texture) {
 
-	bullet.Init("res/textures/sprites/bullet.png");
+	bullet.Init("../res/textures/sprites/bullet.png");
 
 	for (int i = 0; i < 5; i++) {
 

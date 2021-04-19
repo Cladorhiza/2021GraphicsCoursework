@@ -15,7 +15,7 @@ void PatrolEnemy::Move(float timeStep) {
 
 void PatrolEnemy::Update(float timeStep, Character& c, std::vector<std::vector<int>>& collisionMap) {
 
-	bool attacking = Collision::isCollidingCircle(x, y, scanRadius, c.GetX(), c.GetY(), c.GetSize());
+	bool attacking = Collision::IsCollidingCircle(x, y, scanRadius, c.GetX(), c.GetY(), c.GetSize());
 
 	if (attacking) {
 		if (speed < 10.f) speed += 4.f * timeStep;
@@ -25,12 +25,12 @@ void PatrolEnemy::Update(float timeStep, Character& c, std::vector<std::vector<i
 	else {
 
 		if (patrolWaypoint) {
-			if (Collision::isCollidingCircle(x, y, size, patrol1.x, patrol1.y, 0.5f)) patrolWaypoint = !patrolWaypoint;
+			if (Collision::IsCollidingCircle(x, y, size, patrol1.x, patrol1.y, 0.5f)) patrolWaypoint = !patrolWaypoint;
 			else
 				velocity = glm::normalize(glm::vec2(patrol1.x - x, patrol1.y - y)) * speed;
 		}
 		else {
-			if (Collision::isCollidingCircle(x, y, size, patrol2.x, patrol2.y, 0.5f)) patrolWaypoint = !patrolWaypoint;
+			if (Collision::IsCollidingCircle(x, y, size, patrol2.x, patrol2.y, 0.5f)) patrolWaypoint = !patrolWaypoint;
 			else
 				velocity = glm::normalize(glm::vec2(patrol2.x - x, patrol2.y - y)) * speed;
 		}
@@ -40,20 +40,20 @@ void PatrolEnemy::Update(float timeStep, Character& c, std::vector<std::vector<i
 
 	Move(timeStep);
 	//if rock hit it
-	if (Collision::isCollidingCircle(x, y, size, c.GetRock().GetX(), c.GetRock().GetY(), c.GetRock().GetSize()) && c.GetRock().IsDamaging()) {
+	if (Collision::IsCollidingCircle(x, y, size, c.GetRock().GetX(), c.GetRock().GetY(), c.GetRock().GetSize()) && c.GetRock().IsDamaging()) {
 		//dead
 		alive = false;
 		printf("rock");
 		c.GetRock().SetDamaging(false);
 	}
 	//if sword hit it
-	if (Collision::isCollidingCircle(x, y, size, c.GetSword().GetX(), c.GetSword().GetY(), c.GetSword().GetSize()) && c.GetSword().IsDamaging()) {
+	if (Collision::IsCollidingCircle(x, y, size, c.GetSword().GetX(), c.GetSword().GetY(), c.GetSword().GetSize()) && c.GetSword().IsDamaging()) {
 		//dead
 		alive = false;
 		printf("sword");
 	}
 	//if collides with player
-	if (Collision::isCollidingCircle(x, y, size, c.GetX(), c.GetY(), c.GetSize())) {
+	if (Collision::IsCollidingCircle(x, y, size, c.GetX(), c.GetY(), c.GetSize())) {
 		//player dead
 
 	}

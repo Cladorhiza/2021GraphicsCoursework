@@ -124,7 +124,7 @@ void Character::Animate(float timeStep) {
 	
 	
 	if (swordSwing->IsDamaging()) 
-			swordSwing->SetRotation(swordSwing->GetRotation() + timeStep * 100);
+			swordSwing->SetRotation(swordSwing->GetRotation() + timeStep * 10000);
 	else animationTimer += timeStep;
 
 	if (animationTimer > 0.1f) {
@@ -151,12 +151,12 @@ void Character::Animate(float timeStep) {
 void Character::Init(float colour[3], Texture* texture, std::vector<std::vector<Texture*>> animations) {
 
 
-	sword.Init("res/textures/sprites/sword_swing.png");
+	sword.Init("../res/textures/sprites/sword_swing.png");
 	swordSwing.reset(new Projectile(1.f, 1.f, 0.f, 0.f, 0.f, 0.5f, false, false));
 	swordSwing->Init(colour, &sword);
 
-	rock.Init("res/textures/sprites/throwing_rock.png");
-	rockThrow.reset(new ThrowingRock(0.3f, 0.3f, 0.f, 0.f, 0.f, 0.15f, false, true, true, 3.f));
+	rock.Init("../res/textures/sprites/throwing_rock.png");
+	rockThrow.reset(new ThrowingRock(0.3f, 0.3f, 0.f, 0.f, 0.f, 0.15f, false, true, true, 5.f));
 	rockThrow->Init(colour, &rock);
 
 	idle = texture;

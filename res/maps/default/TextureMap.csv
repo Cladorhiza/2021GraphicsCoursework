@@ -1,4 +1,4 @@
-grass, 2035
+grass, 2028
 testground, 1
 barrel, 1
 bush, 1
@@ -12,3 +12,10 @@ tree, 1
 water, 1
 window, 1
 woodwall, 1
+cauldron, 1
+skull, 1
+stone, 1
+stonewall, 1
+wallswords, 1
+prison, 1
+torch, 1

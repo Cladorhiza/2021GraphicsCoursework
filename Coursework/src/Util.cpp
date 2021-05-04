@@ -2,6 +2,7 @@
 
 namespace Util {
 
+	//NOT MY CODE, my friend gave me this function
 	std::vector<std::string> split(const std::string& str, const std::string& delim)
 	{
 		std::vector<std::string> strs;

@@ -27,11 +27,16 @@ std::vector<std::pair<std::string, int>> TextureManager::LoadTileTextures(const 
 
 		texNameAndCount = Util::split(fileLine, ",");
 
+		//split counts of tex and texname
 		std::pair<std::string, int> p(texNameAndCount[0], std::stoi(texNameAndCount[1]));
 
-		if (tileTextureMap.find(p.first) == tileTextureMap.end())
+		//if that pair is not in map
+		if (tileTextureMap.find(p.first) == tileTextureMap.end()) {
+			//add it to map with filepath
 			tileTextureMap.emplace(p.first, TILES_PATH + p.first + FILE_EXTENSION);
-		
+			printf("TileTexName: %s, ID: %i\n", fileLine.c_str(), tileTextureMap[p.first].GetID());
+		}
+		//build data to be returned
 		texNamesAndCount.push_back(p);
 	}
 	
@@ -44,14 +49,16 @@ void TextureManager::LoadSpriteTextures(const std::string& filePath) {
 	std::stringstream ss;
 
 	while (std::getline(file, fileLine)) {
+		//load each texture into spriteTextureMap
 		spriteTextureMap.emplace(fileLine, SPRITES_PATH + fileLine + FILE_EXTENSION);
+		printf("SpriteTexName: %s, ID: %i\n", fileLine.c_str(), spriteTextureMap[fileLine].GetID());
 	}
 }
 
 Texture* TextureManager::GetSpriteTexture(const std::string& name) {
 	if (spriteTextureMap.find(name) == spriteTextureMap.end()) {
 		//LOGWARNING
-		printf("default tex for name: %s\n", name);
+		printf("default tex for name: %s\n", name.c_str());
 	}
 	return &spriteTextureMap[name];
 }
@@ -59,7 +66,7 @@ Texture* TextureManager::GetSpriteTexture(const std::string& name) {
 Texture* TextureManager::GetTileTexture(const std::string& name) {
 	if (tileTextureMap.find(name) == tileTextureMap.end()) {
 		//LOGWARNING
-		printf("default tex for name: %s\n", name);
+		printf("default tex for name: %s\n", name.c_str());
 	}
 	return &tileTextureMap[name];
 }

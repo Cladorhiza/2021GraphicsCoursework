@@ -8,7 +8,7 @@ TileMap::TileMap(int sizeX, int sizeY)
 	:worldXMax(sizeX), worldYMax(sizeY), manager(nullptr)
 {
 
-
+	//pushback a tile for each unit of space in tilemap
 	for (int i = 0; i < sizeY; i++) {
 
 		for (int j = 0; j < sizeX; j++) {
@@ -27,6 +27,7 @@ TileMap::TileMap(int sizeX, int sizeY)
 
 }
 
+//builds opengl geometry by pushing back one tile at a time inside vertex vector
 void TileMap::InitTiles(TextureManager& textureManager, const std::string& textureMapPath) {
 	
 	manager = &textureManager;
@@ -36,17 +37,22 @@ void TileMap::InitTiles(TextureManager& textureManager, const std::string& textu
 	size_t tileIndex = 0;
 	int tileCount = 0;
 	
-
+	//for each pair of texName : counts
 	for (std::pair<std::string, int>& p : texNamesAndCounts) {
 		
+		//track current tile number
 		tileCount += p.second;
 
+		//loop as many times as we have tiles of this type
 		for (int i = 0; i < p.second; i++) {
 
+			//if tile texture is not in our map of texNames to unique texture IDs
 			if (uniqueTexturesNames.find(p.first) == uniqueTexturesNames.end()) {
+				//add it and increase the count of unique textures
 				uniqueTexturesNames[p.first] = uniqueTexCount;
 				uniqueTexCount++;
 			}
+			//set the texture information for the tile
 			tiles[tileIndex].texIndex = uniqueTexturesNames[p.first];
 
 			//push 4 quad coords
@@ -158,6 +164,7 @@ TileMap::Tile& TileMap::GetTileByCoordinate(float x, float y) {
 void TileMap::SetTileTextureByCoordinateAlreadyBuilt(float x, float y, const std::string texName) {
 	int texID = uniqueTexturesNames[texName];
 
+	//hacky hard code nonsense resetting texture ID's then rebuilding the openGL geometry
 	vertexes[36*((int)x + ((int)y * worldXMax)) + 8]  = texID;
 	vertexes[36*((int)x + ((int)y * worldXMax)) + 17] = texID;
 	vertexes[36*((int)x + ((int)y * worldXMax)) + 26] = texID;
@@ -198,6 +205,7 @@ void TileMap::build() {
 
 }
 
+//used to export to file
 std::string TileMap::ExportAsString() {
 
 

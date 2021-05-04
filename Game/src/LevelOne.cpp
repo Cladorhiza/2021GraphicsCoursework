@@ -119,8 +119,6 @@ void LevelOne::Update(float timeStep) {
 	else displayHelp = false;
 	if (Collision::IsCollidingCircle(player.GetX(), player.GetY(), player.GetSize(), 51.5f, 26.5f, 0.25f))
 		completed = true;
-
-
 }
 
 void LevelOne::Render(Shader& shader) {

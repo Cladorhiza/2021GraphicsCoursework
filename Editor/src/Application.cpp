@@ -84,12 +84,21 @@ int main(void) {
 	texStrings.emplace_back("water");
 	texStrings.emplace_back("window");
 	texStrings.emplace_back("woodwall");
+	texStrings.emplace_back("cauldron");
+	texStrings.emplace_back("skull");
+	texStrings.emplace_back("stone");
+	texStrings.emplace_back("stonewall");
+	texStrings.emplace_back("wallswords");
+	texStrings.emplace_back("torch");
+	texStrings.emplace_back("prison");
+	
+	
 
 
 	std::unordered_map<std::string, int> TextureNamesToCollision;
 	for (std::string s : texStrings) {
 
-		if (s == "dirt" || s == "sand" || s == "grass")
+		if (s == "dirt" || s == "sand" || s == "grass" || s == "stone" || s == "skull")
 			TextureNamesToCollision[s] = 0;
 		else TextureNamesToCollision[s] = 1;
 	}

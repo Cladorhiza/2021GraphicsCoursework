@@ -17,6 +17,7 @@ Renderer::~Renderer()
 }
 
 void Renderer::DrawQuad(Shape& sprite, Shader& shader) {
+	glEnable(GL_BLEND);
 	shader.Bind();
 	sprite.Bind();
 	shader.SetUniformvec3f("WorldPosition", sprite.GetX(), sprite.GetY(), sprite.GetZ());
@@ -25,9 +26,11 @@ void Renderer::DrawQuad(Shape& sprite, Shader& shader) {
 	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
 	shader.SetUniformvec3f("WorldPosition", 0.0f,0.0f,0.0f);
 	shader.SetUniform1f("Rotation", 0.f);
+	glDisable(GL_BLEND);
 }
 
 void Renderer::DrawCharacter(Character& character, Shader& shader) {
+	
 	DrawQuad(character, shader);	
 	
 	if (character.GetSword().IsDamaging()) 

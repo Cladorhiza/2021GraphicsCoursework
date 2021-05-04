@@ -6,6 +6,7 @@ Collision::Collision()
 {
 }
 
+//loads a 2 dimensional vector of 1's and 0's marking which tiles are solid in the environment from filepath
 std::vector<std::vector<int>> Collision::LoadCollisionMapFromFile(const std::string& filePath) {
 
 	std::vector<std::vector<int>> collisionMap;
@@ -33,7 +34,7 @@ std::vector<std::vector<int>> Collision::LoadCollisionMapFromFile(const std::str
 
 
 
-
+//returns all potential tiles in environment that could be colliding with the circle of position x and y with radius size
 std::vector<std::pair<int, int>> Collision::GetPotentialRectangleCollidersForCircle(std::vector<std::vector<int>>& collisionMap, float x, float y, float size) {
 
 	std::vector<std::pair<int, int>> potentialColliders;
@@ -60,6 +61,7 @@ bool Collision::IsCollidingCircle(float x1, float y1, float r1, float x2, float 
 	return ((x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2)) < (r1 + r2) * (r1 + r2);
 }
 
+//used to write back to file
 std::string Collision::ToString(std::vector<std::vector<int>> collMap) {
 
 

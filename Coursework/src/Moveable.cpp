@@ -9,6 +9,7 @@ Moveable::Moveable(float width, float height, float positionX, float positionY, 
 	velocity = glm::vec2(0, 0);
 }
 
+//pass bottom left coordinates of a unit square, returns whether or not circle is colliding with square
 bool Moveable::isCollidingRectangle(int rectX, int rectY) {
 
 	glm::vec2 nearestPoint;

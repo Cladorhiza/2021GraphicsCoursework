@@ -2,6 +2,7 @@
 #include "Moveable.h"
 #include "Projectile.h"
 #include "ThrowingRock.h"
+#include "irrKlang.h"
 class Character : public Moveable
 {
 private:
@@ -23,16 +24,19 @@ private:
 	bool facingUp;
 	bool facingDown;
 	bool directionChanged;
+	bool isAlive;
+	bool swordSwinging;
 
-	void Animate(float timeStep);
+	void Animate(float timeStep,  irrklang::ISoundEngine* soundEngine);
 public:
 	Character(float width, float height, float positionX, float positionY, float positionZ, float size, float movementSpeed);
 	~Character();
 	virtual void Move(float timeStep);
-	virtual void Update(float timeStep, InputManager& inputManager, std::vector<std::vector<int>>& collisionMap);
+	virtual void Update(float timeStep, InputManager& inputManager, std::vector<std::vector<int>>& collisionMap, irrklang::ISoundEngine* soundEngine);
 	void Init(float colour[3], Texture* texture, std::vector<std::vector<Texture*>> animations);
 	inline Projectile& GetSword() { return *swordSwing; }
 	inline ThrowingRock& GetRock() { return *rockThrow; }
-	
+	inline bool IsAlive() { return isAlive; }
+	inline void SetAlive(bool a) { isAlive = a; }
 };
 

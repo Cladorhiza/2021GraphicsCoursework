@@ -4,6 +4,7 @@
 
 InputManager::InputManager()
 {
+	//all the keys used in the game
 	keys[GLFW_KEY_W] = GLFW_RELEASE;
 	keys[GLFW_KEY_A] = GLFW_RELEASE;
 	keys[GLFW_KEY_S] = GLFW_RELEASE;
@@ -13,9 +14,10 @@ InputManager::InputManager()
 }
 
 void InputManager::Poll(GLFWwindow* window) {
-
+	//updates glfw keys
 	glfwPollEvents();
 
+	//updates state of keys in my game
 	int state = glfwGetKey(window, GLFW_KEY_W);
 	keys[GLFW_KEY_W] = state;
 	state = glfwGetKey(window, GLFW_KEY_A);

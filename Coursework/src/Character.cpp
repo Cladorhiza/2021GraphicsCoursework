@@ -6,8 +6,15 @@
 
 
 
+
 Character::Character(float width, float height, float positionX, float positionY, float positionZ, float size, float movementSpeed)
-	:Moveable(width, height, positionX, positionY, positionZ, size), movementSpeed(movementSpeed), animationTimer(0.f), directionChanged(false), swordSwing(nullptr)
+	:Moveable(width, height, positionX, positionY, positionZ, size), 
+	movementSpeed(movementSpeed), 
+	animationTimer(0.f), 
+	directionChanged(false), 
+	swordSwing(nullptr), 
+	isAlive(true), 
+	swordSwinging(false)
 {
 	
 }
@@ -16,13 +23,22 @@ void Character::Move(float timeStep) {
 	Translate(velocity.x * timeStep, velocity.y * timeStep, 0.0f);
 }
 
-void Character::Update(float timeStep, InputManager& inputManager, std::vector<std::vector<int>>& collisionMap) {
+void Character::Update(float timeStep, InputManager& inputManager, std::vector<std::vector<int>>& collisionMap, irrklang::ISoundEngine* soundEngine) {
+	
 	
 	//Sword Attack
 	if (inputManager.getKeyState(GLFW_KEY_L) == GLFW_PRESS) {
+		
+		if (!swordSwinging) {
+			soundEngine->play2D("../res/audio/sword swing.mp3");
+			swordSwinging = true;
+		}
 		swordSwing->SetDamaging(true);
 	}
-	else swordSwing->SetDamaging(false);
+	else {
+		swordSwing->SetDamaging(false);
+		swordSwinging = false;
+	}
 
 	if (swordSwing->IsDamaging()) {
 		if (facingDown) {
@@ -50,13 +66,11 @@ void Character::Update(float timeStep, InputManager& inputManager, std::vector<s
 	//Throwing Attack
 	if (rockThrow->IsDamaging()) {
 
-		rockThrow->Update(timeStep, collisionMap);
+		rockThrow->Update(timeStep, collisionMap, soundEngine);
 	}
-	else if (inputManager.getKeyState(GLFW_KEY_K) == GLFW_PRESS) {
+	else if (inputManager.getKeyState(GLFW_KEY_K) == GLFW_PRESS && glm::length(velocity) > 0.05f) {
 
-		rockThrow->SetPosition(x, y, z);
-		rockThrow->SetVelocity(velocity);
-		rockThrow->SetDamaging(true);
+		rockThrow->Reset(x, y, z, velocity);
 	}
 
 	//WASD movement
@@ -65,6 +79,7 @@ void Character::Update(float timeStep, InputManager& inputManager, std::vector<s
 	velocity.y = 0;
 	isMoving = false;
 	
+	//if sword not damaging, enable movement
 	if (!swordSwing->IsDamaging()) {
 
 		if (inputManager.getKeyState(GLFW_KEY_W) == GLFW_PRESS || inputManager.getKeyState(GLFW_KEY_W) == GLFW_REPEAT) {
@@ -97,13 +112,15 @@ void Character::Update(float timeStep, InputManager& inputManager, std::vector<s
 
 	}
 	
+	//if movement input and not using sword, move
 	if (isMoving && !swordSwing->IsDamaging()) {
 		if (velocity != currentVelocity) directionChanged = true;
 		velocity = glm::normalize(velocity) * movementSpeed;
 		Move(timeStep);
 	}
 	else velocity = glm::vec2(0.f, 0.f);
-	Animate(timeStep);
+
+	Animate(timeStep, soundEngine);
 
 	//basic collisions between player and terrain
 	std::vector<std::pair<int, int>> colls = Collision::GetPotentialRectangleCollidersForCircle(collisionMap, x, y, size);
@@ -115,20 +132,20 @@ void Character::Update(float timeStep, InputManager& inputManager, std::vector<s
 	}
 }
 
-void Character::Animate(float timeStep) {
+void Character::Animate(float timeStep, irrklang::ISoundEngine* soundEngine) {
 
+	//if changing direction, reset animation frames
 	if (directionChanged) { 
 		animationCounter = 0;
 		directionChanged = false;
 	}
 	
 	
-	if (swordSwing->IsDamaging()) 
-			swordSwing->SetRotation(swordSwing->GetRotation() + timeStep * 10000);
-	else animationTimer += timeStep;
+	if (!swordSwing->IsDamaging()) 
+		animationTimer += timeStep;
 
+	//swap frames every 0.1 seconds
 	if (animationTimer > 0.1f) {
-
 		if (facingUp) {
 			SetTexture(upAnimation[animationCounter % upAnimation.size()]);
 		}
@@ -150,7 +167,7 @@ void Character::Animate(float timeStep) {
 
 void Character::Init(float colour[3], Texture* texture, std::vector<std::vector<Texture*>> animations) {
 
-
+	
 	sword.Init("../res/textures/sprites/sword_swing.png");
 	swordSwing.reset(new Projectile(1.f, 1.f, 0.f, 0.f, 0.f, 0.5f, false, false));
 	swordSwing->Init(colour, &sword);

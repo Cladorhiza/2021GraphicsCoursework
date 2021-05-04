@@ -1,14 +1,1 @@
-﻿  Application.cpp
-c:\git\2021graphicscoursework\coursework\src\tilemap.h(19): warning C4240: nonstandard extension used: access to 'TileMap::Tile' now defined to be 'public', previously it was defined to be 'protected'
-  c:\git\2021graphicscoursework\coursework\src\tilemap.h(8): note: see declaration of 'TileMap::Tile'
-  Level.cpp
-c:\git\2021graphicscoursework\coursework\src\tilemap.h(19): warning C4240: nonstandard extension used: access to 'TileMap::Tile' now defined to be 'public', previously it was defined to be 'protected'
-  c:\git\2021graphicscoursework\coursework\src\tilemap.h(8): note: see declaration of 'TileMap::Tile'
-  LevelOne.cpp
-c:\git\2021graphicscoursework\coursework\src\tilemap.h(19): warning C4240: nonstandard extension used: access to 'TileMap::Tile' now defined to be 'public', previously it was defined to be 'protected'
-  c:\git\2021graphicscoursework\coursework\src\tilemap.h(8): note: see declaration of 'TileMap::Tile'
-  LevelTwo.cpp
-c:\git\2021graphicscoursework\coursework\src\tilemap.h(19): warning C4240: nonstandard extension used: access to 'TileMap::Tile' now defined to be 'public', previously it was defined to be 'protected'
-  c:\git\2021graphicscoursework\coursework\src\tilemap.h(8): note: see declaration of 'TileMap::Tile'
-  Generating Code...
-  Game.vcxproj -> C:\Git\2021GraphicsCoursework\x64\Debug\Game.exe
+﻿  Game.vcxproj -> C:\Git\2021GraphicsCoursework\x64\Debug\Game.exe

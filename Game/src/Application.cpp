@@ -97,7 +97,6 @@ int main(void) {
 		glClearColor(0.0f, 0.0f, 0.0f, 1.f);
 		glClear(GL_COLOR_BUFFER_BIT);
 
-
 		if (playingLevelOne) {
 			if (firstTimeLevelOne) {
 				firstTimeLevelOne = false;

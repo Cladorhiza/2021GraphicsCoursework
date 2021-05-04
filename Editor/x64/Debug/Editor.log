@@ -1,4 +1,2 @@
-﻿  Application2.cpp
-c:\git\2021graphicscoursework\coursework\src\tilemap.h(19): warning C4240: nonstandard extension used: access to 'TileMap::Tile' now defined to be 'public', previously it was defined to be 'protected'
-  c:\git\2021graphicscoursework\coursework\src\tilemap.h(8): note: see declaration of 'TileMap::Tile'
+﻿C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets(391,5): warning MSB8028: The intermediate directory (x64\Debug\) contains files shared from another project (Accursed.vcxproj).  This can lead to incorrect clean and rebuild behavior.
   Editor.vcxproj -> C:\Git\2021GraphicsCoursework\x64\Debug\Editor.exe

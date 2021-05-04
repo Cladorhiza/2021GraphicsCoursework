@@ -7,7 +7,7 @@ Entity::Entity()
 }
 
 Entity::Entity(float positionX, float positionY, float positionZ)
-	:x(positionX), y(positionY), z(positionZ)
+	:x(positionX), y(positionY), z(positionZ), rotation(0)
 {
 }
 

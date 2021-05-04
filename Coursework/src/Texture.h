@@ -14,6 +14,6 @@ public:
 	void Bind();
 	void Bind(int slot);
 	void Unbind();
-	//Texture(const Texture& t) = delete;
+	inline unsigned GetID() { return id; }
 };
 

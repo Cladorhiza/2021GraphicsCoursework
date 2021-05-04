@@ -90,7 +90,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\GLFW\include;$(SolutionDir)Dependencies\glew-2.1.0\include;$(SolutionDir)Accursed/src/not_my_code</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\GLFW\include;$(SolutionDir)Dependencies\glew-2.1.0\include;$(SolutionDir)Coursework/src/not_my_code;$(SolutionDir)Dependencies\irrKlang-64bit-1.6.0\irrKlang-64bit-1.6.0\include</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>GLEW_STATIC;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
@@ -123,7 +123,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\GLFW\include;$(SolutionDir)Dependencies\glew-2.1.0\include;$(SolutionDir)Accursed/src/not_my_code</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\GLFW\include;$(SolutionDir)Dependencies\glew-2.1.0\include;$(SolutionDir)Coursework/src/not_my_code;$(SolutionDir)Dependencies\irrKlang-64bit-1.6.0\irrKlang-64bit-1.6.0\include</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>GLEW_STATIC;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
@@ -134,15 +134,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\Level.cpp" />
-    <ClCompile Include="src\RangedEnemy.cpp" />
-    <ClCompile Include="src\PatrolEnemy.cpp" />
+    <ClCompile Include="src\Character.cpp" />
     <ClCompile Include="src\Enemy.cpp" />
+    <ClCompile Include="src\PatrolEnemy.cpp" />
     <ClCompile Include="src\Projectile.cpp" />
     <ClCompile Include="src\Collision.cpp" />
-    <ClCompile Include="src\Character.cpp" />
     <ClCompile Include="src\Moveable.cpp" />
     <ClCompile Include="src\InputManager.cpp" />
+    <ClCompile Include="src\RangedEnemy.cpp" />
     <ClCompile Include="src\Sprite.cpp" />
     <ClCompile Include="src\Rectangle.cpp" />
     <ClCompile Include="src\not_my_code\stb_image\stb_image.cpp" />
@@ -150,26 +149,25 @@
     <ClCompile Include="src\Shape.cpp" />
     <ClCompile Include="src\Entity.cpp" />
     <ClCompile Include="src\Shader.cpp" />
+    <ClCompile Include="src\ThrowingRock.cpp" />
     <ClCompile Include="src\Util.cpp" />
     <ClCompile Include="src\VertexArray.cpp" />
     <ClCompile Include="src\Texture.cpp" />
     <ClCompile Include="src\TileMap.cpp" />
     <ClCompile Include="src\TextureManager.cpp" />
-    <ClCompile Include="src\ThrowingRock.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="res\shaders\Basic.shader" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\Level.h" />
-    <ClInclude Include="src\RangedEnemy.h" />
-    <ClInclude Include="src\PatrolEnemy.h" />
+    <ClInclude Include="src\Character.h" />
     <ClInclude Include="src\Enemy.h" />
+    <ClInclude Include="src\PatrolEnemy.h" />
     <ClInclude Include="src\Projectile.h" />
     <ClInclude Include="src\Collision.h" />
-    <ClInclude Include="src\Character.h" />
     <ClInclude Include="src\Moveable.h" />
     <ClInclude Include="src\InputManager.h" />
+    <ClInclude Include="src\RangedEnemy.h" />
     <ClInclude Include="src\Sprite.h" />
     <ClInclude Include="src\Rectangle.h" />
     <ClInclude Include="src\not_my_code\stb_image\stb_image.h" />
@@ -177,12 +175,12 @@
     <ClInclude Include="src\Shape.h" />
     <ClInclude Include="src\Entity.h" />
     <ClInclude Include="src\Shader.h" />
+    <ClInclude Include="src\ThrowingRock.h" />
     <ClInclude Include="src\Util.h" />
     <ClInclude Include="src\VertexArray.h" />
     <ClInclude Include="src\Texture.h" />
     <ClInclude Include="src\TileMap.h" />
     <ClInclude Include="src\TextureManager.h" />
-    <ClInclude Include="src\ThrowingRock.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

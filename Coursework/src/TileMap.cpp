@@ -5,7 +5,7 @@
 
 
 TileMap::TileMap(int sizeX, int sizeY)
-	:worldXMax(sizeX), worldYMax(sizeY), manager(nullptr)
+	:worldXMax(sizeX), worldYMax(sizeY), manager(nullptr), vbo(0), vao(0), ibo(0)
 {
 
 	//pushback a tile for each unit of space in tilemap
@@ -14,8 +14,8 @@ TileMap::TileMap(int sizeX, int sizeY)
 		for (int j = 0; j < sizeX; j++) {
 
 			Tile t;
-			t.x = j;
-			t.y = i;
+			t.x = static_cast<float>(j);
+			t.y = static_cast<float>(i);
 			t.z = 0.0f;
 			t.texIndex = 0.f;
 
@@ -53,7 +53,7 @@ void TileMap::InitTiles(TextureManager& textureManager, const std::string& textu
 				uniqueTexCount++;
 			}
 			//set the texture information for the tile
-			tiles[tileIndex].texIndex = uniqueTexturesNames[p.first];
+			tiles[tileIndex].texIndex = static_cast<float>(uniqueTexturesNames[p.first]);
 
 			//push 4 quad coords
 			
@@ -153,7 +153,7 @@ void TileMap::Unbind() {
 }
 
 int TileMap::Size() {
-	return tiles.size();
+	return static_cast<int>(tiles.size());
 }
 
 TileMap::Tile& TileMap::GetTileByCoordinate(float x, float y) {
@@ -165,12 +165,12 @@ void TileMap::SetTileTextureByCoordinateAlreadyBuilt(float x, float y, const std
 	int texID = uniqueTexturesNames[texName];
 
 	//hacky hard code nonsense resetting texture ID's then rebuilding the openGL geometry
-	vertexes[36*((int)x + ((int)y * worldXMax)) + 8]  = texID;
-	vertexes[36*((int)x + ((int)y * worldXMax)) + 17] = texID;
-	vertexes[36*((int)x + ((int)y * worldXMax)) + 26] = texID;
-	vertexes[36*((int)x + ((int)y * worldXMax)) + 35] = texID;
+	vertexes[36*((int)x + ((int)y * worldXMax)) + 8]  = static_cast<float>(texID);
+	vertexes[36*((int)x + ((int)y * worldXMax)) + 17] = static_cast<float>(texID);
+	vertexes[36*((int)x + ((int)y * worldXMax)) + 26] = static_cast<float>(texID);
+	vertexes[36*((int)x + ((int)y * worldXMax)) + 35] = static_cast<float>(texID);
 
-	GetTileByCoordinate(x, y).texIndex = uniqueTexturesNames[texName];
+	GetTileByCoordinate(x, y).texIndex = static_cast<float>(uniqueTexturesNames[texName]);
 
 	build();
 }

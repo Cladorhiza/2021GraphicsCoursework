@@ -12,7 +12,6 @@ public:
 	~ThrowingRock();
 	void Move(float timeStep);
 	void Update(float timeStep, std::vector<std::vector<int>>& collisionMap, irrklang::ISoundEngine* soundEngine);
-	inline void setLifeTime(int lifeTime) { currentLifeTime = lifeTime; }
+	inline void setLifeTime(int lifeTime) { currentLifeTime = static_cast<float>(lifeTime); }
 	void Reset(float x, float y, float z, glm::vec2 velocity);
 };
-

@@ -1,2 +1,6 @@
-﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(517,5): warning MSB8028: The intermediate directory (x64\Debug\) contains files shared from another project (Accursed.vcxproj).  This can lead to incorrect clean and rebuild behavior.
+﻿  TileMap.cpp
+C:\Git\2021GraphicsCoursework\Coursework\src\TileMap.cpp(227,37): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Git\2021GraphicsCoursework\Coursework\src\TileMap.cpp(227,34): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Git\2021GraphicsCoursework\Coursework\src\TileMap.cpp(230,24): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Git\2021GraphicsCoursework\Coursework\src\TileMap.cpp(241,24): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
   Coursework.vcxproj -> C:\Git\2021GraphicsCoursework\x64\Debug\Coursework.lib

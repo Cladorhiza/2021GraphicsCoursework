@@ -4,18 +4,9 @@
 #include "TextureManager.h"
 class TileMap
 {
-protected:
-	struct Tile;
-	std::vector<Tile> tiles;
-	std::vector<Texture> textures;
-	int worldXMax;
-	int worldYMax;
-	std::unordered_map<std::string, int> uniqueTexturesNames;
-	std::vector<float> vertexes;
-	std::vector<unsigned> indexes;
-	unsigned vbo, vao, ibo;
-	TextureManager* manager;
+
 public:
+
 	struct Tile {
 		float x, y, z;
 		float texIndex;
@@ -33,5 +24,17 @@ public:
 	void build();
 	void SetTileTextureByCoordinateAlreadyBuilt(float x, float y, const std::string texName);
 	std::string ExportAsString();
+
+private:
+
+	std::vector<Tile> tiles;
+	std::vector<Texture> textures;
+	int worldXMax;
+	int worldYMax;
+	std::unordered_map<std::string, int> uniqueTexturesNames;
+	std::vector<float> vertexes;
+	std::vector<unsigned> indexes;
+	unsigned vbo, vao, ibo;
+	TextureManager* manager;
 };
 

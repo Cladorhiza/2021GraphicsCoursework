@@ -3,6 +3,7 @@
 #include "Projectile.h"
 #include "ThrowingRock.h"
 #include "irrKlang.h"
+#include <memory>
 class Character : public Moveable
 {
 private:

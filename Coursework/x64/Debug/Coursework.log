@@ -1,3 +1,2 @@
-﻿C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets(391,5): warning MSB8028: The intermediate directory (x64\Debug\) contains files shared from another project (Accursed.vcxproj).  This can lead to incorrect clean and rebuild behavior.
-  Level.cpp
+﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(517,5): warning MSB8028: The intermediate directory (x64\Debug\) contains files shared from another project (Accursed.vcxproj).  This can lead to incorrect clean and rebuild behavior.
   Coursework.vcxproj -> C:\Git\2021GraphicsCoursework\x64\Debug\Coursework.lib

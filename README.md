@@ -9,8 +9,3 @@ Student Project. Things of note:
 My first graphics project C:
 
 If you look at the source, don't blame me if you throw up
-
-To run:
-
-1. build the coursework project lib
-2. run the game project (or editor but gl with using that)

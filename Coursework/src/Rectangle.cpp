@@ -16,7 +16,7 @@ Rectangle::~Rectangle()
 void Rectangle::Init(float colour[3]) {
 	va.Bind();
 
-	unsigned vertexBuffer, colourBuffer;
+	unsigned vertexBuffer, colourBuffer, texIDbuffer;
 	float vert[12];
 
 	float halfWidth = width / 2.0f;

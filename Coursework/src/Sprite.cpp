@@ -15,7 +15,7 @@ Sprite::~Sprite()
 void Sprite::Init(float colour[3], Texture* texture) {
 	Rectangle::Init(colour);
 
-	unsigned TextureCoordinateBuffer;
+	unsigned TextureCoordinateBuffer, texIDbuffer;
 	
 	this->texture = texture;
 
@@ -31,6 +31,13 @@ void Sprite::Init(float colour[3], Texture* texture) {
 	glBindBuffer(GL_ARRAY_BUFFER, TextureCoordinateBuffer);
 	glBufferData(GL_ARRAY_BUFFER, 8 * sizeof(float), tex, GL_STATIC_DRAW);
 	va.AddBuffer(TextureCoordinateBuffer, 2);
+
+	float texIDs[4]{0.0f, 0.0f, 0.0f, 0.0f};
+	glGenBuffers(1, &texIDbuffer);
+	glBindBuffer(GL_ARRAY_BUFFER, texIDbuffer);
+	glBufferData(GL_ARRAY_BUFFER, 4 * sizeof(float), texIDs, GL_STATIC_DRAW);
+	va.AddBuffer(texIDbuffer, 1);
+
 
 	//disable binds
 	glEnableVertexAttribArray(0);

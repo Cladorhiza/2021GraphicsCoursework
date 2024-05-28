@@ -1,10 +1,1 @@
-﻿  Rectangle.cpp
-C:\Git\2021GraphicsCoursework\Coursework\src\Rectangle.cpp(19,39): warning C4101: 'texIDbuffer': unreferenced local variable
-  Sprite.cpp
-  TileMap.cpp
-C:\Git\2021GraphicsCoursework\Coursework\src\TileMap.cpp(227,37): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Git\2021GraphicsCoursework\Coursework\src\TileMap.cpp(227,34): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Git\2021GraphicsCoursework\Coursework\src\TileMap.cpp(230,24): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-C:\Git\2021GraphicsCoursework\Coursework\src\TileMap.cpp(241,24): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-  Generating Code...
-  Coursework.vcxproj -> C:\Git\2021GraphicsCoursework\x64\Debug\Coursework.lib
+﻿  Coursework.vcxproj -> E:\Git\2021GraphicsCoursework\x64\Debug\Coursework.lib
